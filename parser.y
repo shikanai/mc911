@@ -14,15 +14,8 @@ char *concat(int count, ...);
 }
 
 %token <str> T_STRING
-%token T_SELECT
-%token T_FROM
-%token T_CREATE
-%token T_TABLE
-%token T_INSERT
-%token T_INTO
-%token T_VALUES
-
-%type <str> create_stmt insert_stmt col_list  values_list 
+%token T_TEXTBF
+%token WHITESPACE
 
 %start stmt_list
 
@@ -35,40 +28,18 @@ stmt_list: 	stmt_list stmt
 ;
 
 stmt:
-		create_stmt ';'	{printf("%s",$1);}
-	|	insert_stmt ';'	{printf("%s",$1);}
-
+		text_bf_stmt	{printf("estou no stmt\n");}
+;
+text_bf_stmt:
+		T_TEXTBF '{' expression_st '}'{
+		printf("encontrei o T_TEXTBF\n");
+	}
+;
+		
+expression_st : T_STRING
+      | expression_st T_STRING	{printf("expression_st T_STRING\n");}
 ;
 
-create_stmt:
-	   T_CREATE T_TABLE T_STRING '(' col_list ')' 	{	FILE *F = fopen($3, "w"); 
-								fprintf(F, "%s\n", $5);
-								fclose(F);
-								$$ = concat(5, "\nCREATE TABLE: ", $3, "\nCOL_NAME: ", $5, "\n\n");
-							}
-;
-
-col_list:
-		T_STRING 		{ $$ = $1; }
-	| 	col_list ',' T_STRING 	{ $$ = concat(3, $1, ";", $3); }
-;
-
-
-insert_stmt:
-	   T_INSERT T_INTO T_STRING T_VALUES '(' values_list ')' { FILE *F = fopen($3, "a"); 
-								  fprintf(F, "%s\n", $6);
-								  fclose(F);
-								  $$ = concat(5, "\nINSERT INTO TABLE: ", $3, "\nVALUES: ", $6, "\n\n");
-							 	}
-;
-
-values_list:
-		T_STRING 		{ $$ = $1; }
-	| 	col_list ',' T_STRING 	{ $$ = concat(3, $1, ";", $3); }
-;
-
-
- 
 %%
  
 char* concat(int count, ...)
