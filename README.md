@@ -1,3 +1,3 @@
 # mc911
 
-batata
+26/02 - Inserido textit. Falta mudar stmt
