@@ -15,6 +15,7 @@ char *concat(int count, ...);
 
 %token <str> T_STRING
 %token T_TEXTBF
+%token T_TEXTIT
 %token WHITESPACE
 
 %start stmt_list
@@ -33,6 +34,12 @@ stmt:
 text_bf_stmt:
 		T_TEXTBF '{' expression_st '}'{
 		printf("encontrei o T_TEXTBF\n");
+	}
+;
+
+text_it_stmt:
+		T_TEXTIT '{' expression_st '}'{
+		printf("encontrei o T_TEXTIT\n");
 	}
 ;
 		
