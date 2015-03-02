@@ -17,6 +17,8 @@ char *concat(int count, ...);
 %token T_TEXTBF
 %token T_TEXTIT
 %token WHITESPACE
+%token T_ITEMIZE
+%token T_ITEMIZE_END
 
 %start stmt_list
 
@@ -42,7 +44,20 @@ text_it_stmt:
 		printf("encontrei o T_TEXTIT\n");
 	}
 ;
+
+itemize_stmt:
+		T_ITEMIZE  item_st T_ITEMIZE_END {
+		printf("itens\n");
+	}
+
+item_st: '\item' item_st_mark expression_st
 		
+		
+item_st_mark: 
+		MARCADOR {
+		printf("com marcador proprio\n");
+	}
+	
 expression_st : T_STRING
       | expression_st T_STRING	{printf("expression_st T_STRING\n");}
 ;
