@@ -19,6 +19,7 @@ char *concat(int count, ...);
 %token WHITESPACE
 %token T_ITEMIZE
 %token T_ITEMIZE_END
+%token T_GRAPHICS
 
 %start stmt_list
 
@@ -51,8 +52,8 @@ itemize_stmt:
 	}
 ;
 
-item_st_list: item
-	| item item_st_list
+item_st_list: item_st
+	| item_st item_st_list
 ;
 
 item_st: '\item' item_st_mark expression_st
@@ -66,6 +67,12 @@ item_st_mark:
 	
 expression_st : T_STRING
       | expression_st T_STRING	{printf("expression_st T_STRING\n");}
+;
+
+grafics_st:
+	T_GRAPHICS '{' expression_st '}' {
+		printf("Grafico aqui\n");
+	}
 ;
 
 %%
