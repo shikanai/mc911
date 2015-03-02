@@ -8,6 +8,7 @@ AUTHOR \\author(\{.*\})
 
 STRING ([a-z]|[A-Z])([a-zA-Z0-9])*
 WHITESPACE [ \r\t]+
+MARCADOR (\[[0-9a-zA-Z-.]*\])?
 ANY_CHAR .
 
 %option case-insensitive
@@ -20,6 +21,9 @@ ANY_CHAR .
 {AUTHOR} /* ignore */ ;
 
 "\\textbf"	{return T_TEXTBF;}
+"\\textit"	{return T_TEXTIT;}
+"\\begin{itemize}"	{return T_ITEMIZE}
+"\\end{itemize}"	{return T_ITEMIZE_END}
 
 "{"		{return '{';}
 "}"		{return '}';}
