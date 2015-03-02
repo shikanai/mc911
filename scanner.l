@@ -24,6 +24,7 @@ ANY_CHAR .
 "\\textit"	{return T_TEXTIT;}
 "\\begin{itemize}"	{return T_ITEMIZE}
 "\\end{itemize}"	{return T_ITEMIZE_END}
+"\\includegraphics"	{return T_GRAPHICS}
 
 "{"		{return '{';}
 "}"		{return '}';}
