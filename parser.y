@@ -57,6 +57,7 @@ item_st_list: item_st
 ;
 
 item_st: '\item' item_st_mark expression_st
+	| '\item' item_st_mark expression_st item_st_list
 ;
 		
 item_st_mark: 
