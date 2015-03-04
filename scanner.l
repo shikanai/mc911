@@ -8,7 +8,7 @@ AUTHOR \\author(\{.*\})
 
 STRING ([a-z]|[A-Z])([a-zA-Z0-9])*
 WHITESPACE [ \r\t]+
-MARCADOR (\[[0-9a-zA-Z-.]*\])?
+MARCADOR (\[([0-9a-zA-Z.()\-]*)\])
 ANY_CHAR .
 
 %option case-insensitive
@@ -22,16 +22,22 @@ ANY_CHAR .
 
 "\\textbf"	{return T_TEXTBF;}
 "\\textit"	{return T_TEXTIT;}
-"\\begin{itemize}"	{return T_ITEMIZE}
-"\\end{itemize}"	{return T_ITEMIZE_END}
-"\\includegraphics"	{return T_GRAPHICS}
-
+"\\begin{thebibliography}"	{return T_BIBLIOGRAPHY;}
+"\\end{thebibliography}"	{return T_BIBLIOGRAPHY_END;}
+"\\begin{itemize}"	{return T_ITEMIZE;}
+"\\end{itemize}"	{return T_ITEMIZE_END;}
+"\\includegraphics"	{return T_GRAPHICS;}
+"\\item"			{return T_ITEM;}
 "{"		{return '{';}
 "}"		{return '}';}
 "("		{return '(';}
 ")"		{return ')';} 
 ","		{return ',';}
 ";"		{return ';';}
+
+{MARCADOR} {
+	return T_MARCADOR;
+}
 
 {STRING} {	
 	yylval.str = (char *) strdup(yytext);

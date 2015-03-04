@@ -20,6 +20,10 @@ char *concat(int count, ...);
 %token T_ITEMIZE
 %token T_ITEMIZE_END
 %token T_GRAPHICS
+%token T_ITEM
+%token T_MARCADOR
+%token T_BIBLIOGRAPHY
+%token T_BIBLIOGRAPHY_END
 
 %start stmt_list
 
@@ -27,13 +31,19 @@ char *concat(int count, ...);
  
 %%
 
+//inicio
 stmt_list: 	stmt_list stmt 
 	 |	stmt 
 ;
 
+//aqui eh onde coloca todos os tipos de stmts diferentes
 stmt:
-		text_bf_stmt	{printf("estou no stmt\n");}
+			text_bf_stmt		{printf("encontrei text_bf_stmt\n");}
+		|	text_it_stmt 		{printf("encontrei text_it_stmt\n");}
+		|	T_STRING			{printf("encontrei um T_STRING\n");}
 ;
+
+//aqui ja eh um fork do stmt
 text_bf_stmt:
 		T_TEXTBF '{' expression_st '}'{
 		printf("encontrei o T_TEXTBF\n");
@@ -46,35 +56,35 @@ text_it_stmt:
 	}
 ;
 
-itemize_stmt:
-		T_ITEMIZE  item_st_list T_ITEMIZE_END {
-		printf("itens\n");
-	}
-;
+//itemize_stmt:
+//		T_ITEMIZE  item_st_list T_ITEMIZE_END {
+//		printf("itens\n");
+//	}
+//;
 
-item_st_list: item_st
-	| item_st item_st_list
-;
+//item_st_list: item_st
+//	| item_st item_st_list
+//;
 
-item_st: '\item' item_st_mark expression_st
-	| '\item' item_st_mark expression_st item_st_list
-;
+//item_st: T_ITEM item_st_mark expression_st
+//	| T_ITEM item_st_mark expression_st item_st_list
+//;
 		
-item_st_mark: 
-		MARCADOR {
-		printf("com marcador proprio\n");
-	}
-;
+//item_st_mark: 
+//		T_MARCADOR {
+//		printf("encontrei marcador\n");
+//	}
+//;
 	
-expression_st : T_STRING
+expression_st : T_STRING		{printf("expression_st T_STRING\n");}
       | expression_st T_STRING	{printf("expression_st T_STRING\n");}
 ;
 
-grafics_st:
-	T_GRAPHICS '{' expression_st '}' {
-		printf("Grafico aqui\n");
-	}
-;
+//grafics_st:
+//	T_GRAPHICS '{' expression_st '}' {
+//		printf("Grafico aqui\n");
+//	}
+//;
 
 %%
  
