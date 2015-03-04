@@ -20,14 +20,17 @@ ANY_CHAR .
 {DOCUMENT_CLASS} /* ignore */ ;
 {AUTHOR} /* ignore */ ;
 
-"\\textbf"	{return T_TEXTBF;}
-"\\textit"	{return T_TEXTIT;}
+"\\textbf"			{return T_TEXTBF;}
+"\\textit"			{return T_TEXTIT;}
 "\\begin{thebibliography}"	{return T_BIBLIOGRAPHY;}
 "\\end{thebibliography}"	{return T_BIBLIOGRAPHY_END;}
-"\\begin{itemize}"	{return T_ITEMIZE;}
-"\\end{itemize}"	{return T_ITEMIZE_END;}
-"\\includegraphics"	{return T_GRAPHICS;}
+"\\begin{itemize}"		{return T_ITEMIZE;}
+"\\end{itemize}"		{return T_ITEMIZE_END;}
+"\\includegraphics"		{return T_GRAPHICS;}
 "\\item"			{return T_ITEM;}
+"\\maketitle"			{return T_MAKETITLE;}
+"\\title"			{return T_TITLE;}
+"\\cite"			{return T_CITE;}
 "{"		{return '{';}
 "}"		{return '}';}
 "("		{return '(';}

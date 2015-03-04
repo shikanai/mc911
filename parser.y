@@ -24,6 +24,9 @@ char *concat(int count, ...);
 %token T_MARCADOR
 %token T_BIBLIOGRAPHY
 %token T_BIBLIOGRAPHY_END
+%token T_MAKETITLE
+%token T_TITLE
+%token T_CITE
 
 %start stmt_list
 
@@ -40,25 +43,48 @@ stmt_list: 	stmt_list stmt
 stmt:
 			text_bf_stmt		{printf("encontrei text_bf_stmt\n");}
 		|	text_it_stmt 		{printf("encontrei text_it_stmt\n");}
-		|	T_STRING			{printf("encontrei um T_STRING\n");}
+		|	graphics_stmt		{printf("encontrei graphics_stmt\n");}
+		|	title_stmt		{printf("encontrei title_stmt\n");}
+		|	make_title_stmt		{printf("encontrei make_title_stmt\n");}
+		|	cite_stmt		{printf("encontrei cite_stmt\n");}
+		|	T_STRING		{printf("encontrei um T_STRING\n");}
 ;
 
 //aqui ja eh um fork do stmt
 text_bf_stmt:
-		T_TEXTBF '{' expression_st '}'{
-		printf("encontrei o T_TEXTBF\n");
-	}
+		T_TEXTBF '{' expression_stmt '}'{
+			printf("encontrei o T_TEXTBF\n");
+		}
 ;
 
 text_it_stmt:
-		T_TEXTIT '{' expression_st '}'{
-		printf("encontrei o T_TEXTIT\n");
-	}
+		T_TEXTIT '{' expression_stmt '}'{
+			printf("encontrei o T_TEXTIT\n");
+		}
 ;
+
+title_stmt:
+		T_TITLE '{' expression_stmt '}'{
+			printf("encontrei titulo, guardar ele em variavel para usar no maketitle\n");
+		}
+;
+
+make_title_stmt:
+		T_MAKETITLE{
+			printf("encontrei maketitle, imprimir titulo contido na variavel do title_stmt\n");
+		}
+;
+
+cite_stmt:
+		T_CITE '{' expression_stmt '}'{
+			printf("encontrei cite, adicionar numero de referencia que se encontra no thebibliography\n");
+		}
+;
+
 
 //itemize_stmt:
 //		T_ITEMIZE  item_st_list T_ITEMIZE_END {
-//		printf("itens\n");
+//		printf("itemize_stmt\n");
 //	}
 //;
 
@@ -66,8 +92,8 @@ text_it_stmt:
 //	| item_st item_st_list
 //;
 
-//item_st: T_ITEM item_st_mark expression_st
-//	| T_ITEM item_st_mark expression_st item_st_list
+//item_st: T_ITEM item_st_mark expression_stmt
+//	| T_ITEM item_st_mark expression_stmt item_st_list
 //;
 		
 //item_st_mark: 
@@ -76,15 +102,15 @@ text_it_stmt:
 //	}
 //;
 	
-expression_st : T_STRING		{printf("expression_st T_STRING\n");}
-      | expression_st T_STRING	{printf("expression_st T_STRING\n");}
+expression_stmt : T_STRING		{printf("T_STRING\n");}
+      | expression_stmt T_STRING	{printf("expression_st T_STRING\n");}
 ;
 
-//grafics_st:
-//	T_GRAPHICS '{' expression_st '}' {
-//		printf("Grafico aqui\n");
-//	}
-//;
+graphics_stmt:
+	T_GRAPHICS '{' expression_stmt '}' {
+		printf("Imagem aqui\n");
+	}
+;
 
 %%
  
