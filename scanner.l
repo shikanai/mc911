@@ -1,5 +1,5 @@
 %{
-#include "y.tab.h"
+#include "parser.h"
 %}
 
 USEPACKAGE \\usepackage(\[[a-zA-Z0-9]*\])?(\{[a-zA-Z0-9]*\})
