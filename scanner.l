@@ -1,12 +1,12 @@
 %{
-#include "parser.h"
+#include "y.tab.h"
 %}
 
 USEPACKAGE \\usepackage(\[[a-zA-Z0-9]*\])?(\{[a-zA-Z0-9]*\})
 DOCUMENT_CLASS \\documentclass(\[.*\])?(\{.*\})
 AUTHOR \\author(\{.*\})
 
-STRING ([a-z]|[A-Z])([a-zA-Z0-9])*
+STRING ([a-zA-Z0-9]|\.|\-|\,)+
 WHITESPACE [ \r\t]+
 MARCADOR (\[([0-9a-zA-Z.()\-]*)\])
 ANY_CHAR .
@@ -26,6 +26,8 @@ ANY_CHAR .
 "\\end{thebibliography}"	{return T_BIBLIOGRAPHY_END;}
 "\\begin{itemize}"		{return T_ITEMIZE;}
 "\\end{itemize}"		{return T_ITEMIZE_END;}
+"\\begin{document}"		{return T_DOCUMENT;}
+"\\end{document}"		{return T_DOCUMENT_END;}
 "\\includegraphics"		{return T_GRAPHICS;}
 "\\item"			{return T_ITEM;}
 "\\maketitle"			{return T_MAKETITLE;}

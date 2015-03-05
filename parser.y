@@ -27,14 +27,26 @@ char *concat(int count, ...);
 %token T_MAKETITLE
 %token T_TITLE
 %token T_CITE
+%token T_DOCUMENT_END
+%token T_DOCUMENT
 
-%start stmt_list
+%start start_stmt
 
 %error-verbose
  
 %%
 
-//inicio
+//string antiga: STRING ([a-z]|[A-Z])([a-zA-Z0-9])*
+
+//comeca a maquina de estados
+start_stmt:	document_stmt
+	|		title_stmt document_stmt {printf("tem titulo\n");}
+;
+
+//inicia o documento
+document_stmt:	T_DOCUMENT stmt_list T_DOCUMENT_END	{printf("encontrei um document_stmt\n");}
+;
+
 stmt_list: 	stmt_list stmt 
 	 |	stmt 
 ;
@@ -44,11 +56,20 @@ stmt:
 			text_bf_stmt		{printf("encontrei text_bf_stmt\n");}
 		|	text_it_stmt 		{printf("encontrei text_it_stmt\n");}
 		|	graphics_stmt		{printf("encontrei graphics_stmt\n");}
-		|	title_stmt		{printf("encontrei title_stmt\n");}
 		|	make_title_stmt		{printf("encontrei make_title_stmt\n");}
-		|	cite_stmt		{printf("encontrei cite_stmt\n");}
-		|	T_STRING		{printf("encontrei um T_STRING\n");}
+		|	cite_stmt		{printf("encontrei cite_stmt\n");}	
+		|	T_STRING		{printf("%s ",$1);}
 ;
+
+//text_stmt:
+//			T_TEXTBF '{' expression_stmt '}'{
+//				printf("encontrei o T_TEXTBF\n");
+//			}
+//		|	T_TEXTIT '{' expression_stmt '}'{
+//			printf("encontrei o T_TEXTIT\n");
+//		}
+//		|	expression_stmt {}
+//;
 
 //aqui ja eh um fork do stmt
 text_bf_stmt:
@@ -102,8 +123,8 @@ cite_stmt:
 //	}
 //;
 	
-expression_stmt : T_STRING		{printf("T_STRING\n");}
-      | expression_stmt T_STRING	{printf("expression_st T_STRING\n");}
+expression_stmt : T_STRING		{printf("%s ",$1);}
+      | expression_stmt T_STRING	{printf("%s\n",$2);}
 ;
 
 graphics_stmt:
