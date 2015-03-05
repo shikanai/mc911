@@ -462,9 +462,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    42,    42,    43,    47,    50,    51,    56,    57,    58,
-      59,    60,    61,    76,    82,    88,    94,   100,   126,   127,
-     131
+       0,    44,    44,    45,    49,    52,    53,    59,    61,    62,
+      63,    64,    66,    71,    78,    84,    90,    96,   122,   123,
+     127
 };
 #endif
 
@@ -1392,64 +1392,65 @@ yyreduce:
         case 3:
 
 /* Line 1455 of yacc.c  */
-#line 43 "parser.y"
+#line 45 "parser.y"
     {printf("tem titulo\n");}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 47 "parser.y"
+#line 49 "parser.y"
     {printf("encontrei um document_stmt\n");}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 56 "parser.y"
-    {printf("encontrei text_bf_stmt\n");}
+#line 59 "parser.y"
+    {printf("encontrei text_bf_stmt, testando %s\n",(yyvsp[(1) - (1)].str));}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 57 "parser.y"
+#line 61 "parser.y"
     {printf("encontrei text_it_stmt\n");}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 58 "parser.y"
+#line 62 "parser.y"
     {printf("encontrei graphics_stmt\n");}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 59 "parser.y"
+#line 63 "parser.y"
     {printf("encontrei make_title_stmt\n");}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 60 "parser.y"
+#line 64 "parser.y"
     {printf("encontrei cite_stmt\n");}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 61 "parser.y"
+#line 66 "parser.y"
     {printf("%s ",(yyvsp[(1) - (1)].str));}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 76 "parser.y"
+#line 71 "parser.y"
     {
+			(yyval.str) = concat(2,"texto em negrito: ",(yyvsp[(3) - (4)].str));
 			printf("encontrei o T_TEXTBF\n");
 		}
     break;
@@ -1457,7 +1458,7 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 82 "parser.y"
+#line 78 "parser.y"
     {
 			printf("encontrei o T_TEXTIT\n");
 		}
@@ -1466,7 +1467,7 @@ yyreduce:
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 88 "parser.y"
+#line 84 "parser.y"
     {
 			printf("encontrei titulo, guardar ele em variavel para usar no maketitle\n");
 		}
@@ -1475,7 +1476,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 94 "parser.y"
+#line 90 "parser.y"
     {
 			printf("encontrei maketitle, imprimir titulo contido na variavel do title_stmt\n");
 		}
@@ -1484,7 +1485,7 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 100 "parser.y"
+#line 96 "parser.y"
     {
 			printf("encontrei cite, adicionar numero de referencia que se encontra no thebibliography\n");
 		}
@@ -1493,21 +1494,21 @@ yyreduce:
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 126 "parser.y"
-    {printf("%s ",(yyvsp[(1) - (1)].str));}
+#line 122 "parser.y"
+    {(yyval.str) = (yyvsp[(1) - (1)].str);}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 127 "parser.y"
-    {printf("%s\n",(yyvsp[(2) - (2)].str));}
+#line 123 "parser.y"
+    {(yyval.str) = concat(3,(yyvsp[(1) - (2)].str)," ",(yyvsp[(2) - (2)].str));}
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 131 "parser.y"
+#line 127 "parser.y"
     {
 		printf("Imagem aqui\n");
 	}
@@ -1516,7 +1517,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1520 "y.tab.c"
+#line 1521 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1728,7 +1729,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 136 "parser.y"
+#line 132 "parser.y"
 
  
 char* concat(int count, ...)

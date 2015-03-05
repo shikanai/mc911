@@ -30,6 +30,8 @@ char *concat(int count, ...);
 %token T_DOCUMENT_END
 %token T_DOCUMENT
 
+%type <str> stmt text_bf_stmt text_it_stmt expression_stmt
+
 %start start_stmt
 
 %error-verbose
@@ -53,33 +55,28 @@ stmt_list: 	stmt_list stmt
 
 //aqui eh onde coloca todos os tipos de stmts diferentes
 stmt:
-			text_bf_stmt		{printf("encontrei text_bf_stmt\n");}
-		|	text_it_stmt 		{printf("encontrei text_it_stmt\n");}
+		//escrever html de texto em negrito.
+			text_bf_stmt		{printf("encontrei text_bf_stmt, testando %s\n",$1);}
+		//escrever html de texto em italico.
+		|	text_it_stmt 		{printf("encontrei text_it_stmt, testando %s\n",$1);}
 		|	graphics_stmt		{printf("encontrei graphics_stmt\n");}
 		|	make_title_stmt		{printf("encontrei make_title_stmt\n");}
 		|	cite_stmt		{printf("encontrei cite_stmt\n");}	
+		//escrever html de texto.
 		|	T_STRING		{printf("%s ",$1);}
 ;
-
-//text_stmt:
-//			T_TEXTBF '{' expression_stmt '}'{
-//				printf("encontrei o T_TEXTBF\n");
-//			}
-//		|	T_TEXTIT '{' expression_stmt '}'{
-//			printf("encontrei o T_TEXTIT\n");
-//		}
-//		|	expression_stmt {}
-//;
 
 //aqui ja eh um fork do stmt
 text_bf_stmt:
 		T_TEXTBF '{' expression_stmt '}'{
+			$$ = concat(2,"texto em negrito: ",$3);
 			printf("encontrei o T_TEXTBF\n");
 		}
 ;
 
 text_it_stmt:
 		T_TEXTIT '{' expression_stmt '}'{
+			$$ = concat(2,"texto em italico: ",$3);
 			printf("encontrei o T_TEXTIT\n");
 		}
 ;
@@ -123,8 +120,8 @@ cite_stmt:
 //	}
 //;
 	
-expression_stmt : T_STRING		{printf("%s ",$1);}
-      | expression_stmt T_STRING	{printf("%s\n",$2);}
+expression_stmt : T_STRING		{$$ = $1;}
+      | expression_stmt T_STRING	{$$ = concat(3,$1," ",$2);}
 ;
 
 graphics_stmt:
