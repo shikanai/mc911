@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 char *concat(int count, ...);
+char *title;
 
 %}
  
@@ -30,7 +31,7 @@ char *concat(int count, ...);
 %token T_DOCUMENT_END
 %token T_DOCUMENT
 
-%type <str> stmt text_bf_stmt text_it_stmt expression_stmt
+%type <str> stmt text_bf_stmt text_it_stmt expression_stmt math_mode_stmt title_stmt make_title_stmt document_stmt stmt_list
 
 %start start_stmt
 
@@ -42,54 +43,68 @@ char *concat(int count, ...);
 
 //comeca a maquina de estados
 start_stmt:	document_stmt
-	|		title_stmt document_stmt {printf("tem titulo\n");}
+	|		title_stmt document_stmt
 ;
 
 //inicia o documento
 document_stmt:	T_DOCUMENT stmt_list T_DOCUMENT_END	{printf("encontrei um document_stmt\n");}
 ;
 
-stmt_list: 	stmt_list stmt 
-	 |	stmt 
+stmt_list: 	stmt_list stmt
+	 |	stmt {	} 
 ;
 
 //aqui eh onde coloca todos os tipos de stmts diferentes
 stmt:
 		//escrever html de texto em negrito.
-			text_bf_stmt		{printf("encontrei text_bf_stmt, testando %s\n",$1);}
+			text_bf_stmt		{printf("Texto em negrito: %s\n",$1);}
 		//escrever html de texto em italico.
-		|	text_it_stmt 		{printf("encontrei text_it_stmt, testando %s\n",$1);}
+		|	text_it_stmt 		{printf("%s\n",$1);}
 		|	graphics_stmt		{printf("encontrei graphics_stmt\n");}
-		|	make_title_stmt		{printf("encontrei make_title_stmt\n");}
+		|	make_title_stmt		{printf("%s\n",$1);}
 		|	cite_stmt		{printf("encontrei cite_stmt\n");}	
+		|	math_mode_stmt	{printf("%s\n",$1);}
 		//escrever html de texto.
-		|	T_STRING		{printf("%s ",$1);}
+		|	T_STRING		{
+			//$$ = concat(2,$$,$1);
+			printf("%s ",$1);
+		}
 ;
 
 //aqui ja eh um fork do stmt
 text_bf_stmt:
 		T_TEXTBF '{' expression_stmt '}'{
-			$$ = concat(2,"texto em negrito: ",$3);
-			printf("encontrei o T_TEXTBF\n");
+			$$ = $3;
+			//printf("encontrei o T_TEXTBF\n");
 		}
 ;
 
 text_it_stmt:
 		T_TEXTIT '{' expression_stmt '}'{
 			$$ = concat(2,"texto em italico: ",$3);
-			printf("encontrei o T_TEXTIT\n");
+			//printf("encontrei o T_TEXTIT\n");
 		}
 ;
 
 title_stmt:
 		T_TITLE '{' expression_stmt '}'{
-			printf("encontrei titulo, guardar ele em variavel para usar no maketitle\n");
+			//$$ = $3;
+			int title_size = 0;
+			title_size = strlen($3);
+			
+			//Copia titulo para variavel global
+			//printf("titulo: %s\n", $3);
+			title = (char *) malloc (title_size+1);
+			memcpy(title,$3,title_size);
+			title[title_size] = '\0';
+			//printf("titulo copiado: %s\n", title);
 		}
 ;
 
 make_title_stmt:
 		T_MAKETITLE{
-			printf("encontrei maketitle, imprimir titulo contido na variavel do title_stmt\n");
+			//printf("title: %s\n", title);
+			$$ = title;
 		}
 ;
 
@@ -99,6 +114,10 @@ cite_stmt:
 		}
 ;
 
+math_mode_stmt:
+		'$' expression_stmt '$' {
+			$$ = concat(2,"math_mode: ",$2);
+		}
 
 //itemize_stmt:
 //		T_ITEMIZE  item_st_list T_ITEMIZE_END {
