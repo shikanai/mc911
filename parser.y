@@ -65,6 +65,7 @@ stmt:
 		|	cite_stmt		{printf("encontrei cite_stmt\n");}	
 		|	math_mode_stmt	{printf("%s\n",$1);}
 		//escrever html de texto.
+		| 	itemize_stmt 	{printf("itemize\n");}
 		|	T_STRING		{
 			//$$ = concat(2,$$,$1);
 			printf("%s ",$1);
@@ -119,25 +120,29 @@ math_mode_stmt:
 			$$ = concat(2,"math_mode: ",$2);
 		}
 
-//itemize_stmt:
-//		T_ITEMIZE  item_st_list T_ITEMIZE_END {
-//		printf("itemize_stmt\n");
-//	}
-//;
+itemize_stmt:
+		T_ITEMIZE  item_st_list T_ITEMIZE_END {
+		printf("itemize_stmt\n");
+	}
+;
 
-//item_st_list: item_st
-//	| item_st item_st_list
-//;
+item_st_list: item_st
+	| item_st item_st_list
+;
 
-//item_st: T_ITEM item_st_mark expression_stmt
-//	| T_ITEM item_st_mark expression_stmt item_st_list
-//;
+item_st: T_ITEM item_st_mark expression_stmt tst_stmt
+	| T_ITEM item_st_mark expression_stmt
+;
 		
-//item_st_mark: 
-//		T_MARCADOR {
-//		printf("encontrei marcador\n");
-//	}
-//;
+tst_stmt:
+	itemize_stmt
+;
+		
+item_st_mark: 
+		T_MARCADOR {
+		printf("encontrei marcador\n");
+	}
+;
 	
 expression_stmt : T_STRING		{$$ = $1;}
       | expression_stmt T_STRING	{$$ = concat(3,$1," ",$2);}
