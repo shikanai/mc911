@@ -84,14 +84,14 @@ stmt:
 			text_bf_stmt		{
 				printf("Texto em negrito: %s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
-				fprintf(fp,"%s",$1);
+				fprintf(fp,"<b>%s</b>",$1);
 				fclose(fp);
 			}
 		//escrever html de texto em italico.
 		|	text_it_stmt 		{
 				printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
-				fprintf(fp,"%s",$1);
+				fprintf(fp,"<i>%s</i>",$1);
 				fclose(fp);
 			}
 		|	graphics_stmt		{
@@ -101,7 +101,7 @@ stmt:
 		|	make_title_stmt		{
 				printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
-				fprintf(fp,"%s",$1);
+				fprintf(fp,"<h1>%s</h1>",$1);
 				fclose(fp);
 			}
 		|	cite_stmt		{
@@ -134,7 +134,7 @@ stmt:
 			}
 		|	T_ENTER {
 				FILE *fp = fopen("projeto1.html","a");
-				fwrite("\n",1,1,fp);
+				fwrite("<br>",4,1,fp);
 				fclose(fp);
 			}
 ;
@@ -142,14 +142,14 @@ stmt:
 //aqui ja eh um fork do stmt
 text_bf_stmt:
 		T_TEXTBF '{' expression_stmt '}'{
-			$$ = concat(2,"texto em negrito: ",$3);
+			$$ = concat(1,$3);
 			//printf("encontrei o T_TEXTBF\n");
 		}
 ;
 
 text_it_stmt:
 		T_TEXTIT '{' expression_stmt '}'{
-			$$ = concat(2,"texto em italico: ",$3);
+			$$ = concat(1,$3);
 			//printf("encontrei o T_TEXTIT\n");
 		}
 ;
@@ -191,7 +191,7 @@ math_mode_stmt:
 ;
 
 itemize_stmt:
-		T_ITEMIZE item_st_list T_ITEMIZE_END {
+		T_ITEMIZE T_ENTER item_st_list T_ITEMIZE_END T_ENTER{
 		printf("itemize_stmt\n");
 	}
 ;
@@ -200,8 +200,8 @@ item_st_list: item_st
 	| item_st_list item_st 
 ;
 
-item_st: T_ITEM item_st_mark expression_stmt tst_stmt
-	| T_ITEM item_st_mark expression_stmt
+item_st: T_ITEM item_st_mark expression_stmt T_ENTER tst_stmt {printf("Item\n");}
+	| T_ITEM item_st_mark expression_stmt T_ENTER
 ;
 		
 tst_stmt:
@@ -212,6 +212,7 @@ item_st_mark:
 		T_MARCADOR {
 		printf("encontrei marcador\n");
 	}
+	| /* Vazio */
 ;
 	
 expression_stmt : T_STRING		{$$ = $1;}
