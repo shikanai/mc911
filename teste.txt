@@ -1,0 +1,2 @@
+
+*** Erro: syntax error, unexpected T_ENTER, expecting T_TITLE or T_DOCUMENT

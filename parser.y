@@ -30,8 +30,12 @@ char *title;
 %token T_CITE
 %token T_DOCUMENT_END
 %token T_DOCUMENT
+%token T_OMEGA
+%token T_BIBITEM
+%token T_ENTER
 
 %type <str> stmt text_bf_stmt text_it_stmt expression_stmt math_mode_stmt title_stmt make_title_stmt document_stmt stmt_list
+%type <str> bibliography_stmt bibitem_stmt T_ENTER //enter_stmt_valid
 
 %start start_stmt
 
@@ -39,43 +43,106 @@ char *title;
  
 %%
 
-//string antiga: STRING ([a-z]|[A-Z])([a-zA-Z0-9])*
-
 //comeca a maquina de estados
 start_stmt:	document_stmt
+	| 		enter_stmt document_stmt
+	| 		document_stmt enter_stmt
+	| 		enter_stmt document_stmt enter_stmt
 	|		title_stmt document_stmt
+	|		enter_stmt title_stmt document_stmt
+	|		title_stmt enter_stmt document_stmt
+	|		title_stmt document_stmt enter_stmt
+	|		enter_stmt title_stmt enter_stmt document_stmt
+	|		enter_stmt title_stmt document_stmt enter_stmt
+	|		title_stmt enter_stmt document_stmt enter_stmt
+	|		enter_stmt title_stmt enter_stmt document_stmt enter_stmt
 ;
 
+//ignore enter antes do document statement
+enter_stmt:	enter_stmt T_ENTER
+		|	T_ENTER
+;
+
+//enter_stmt_valid: enter_stmt_valid T_ENTER {$$ = concat(2,$1,$2);}
+//		| 	T_ENTER	{$$ = $1;}
+//;		
+		
 //inicia o documento
-document_stmt:	T_DOCUMENT stmt_list T_DOCUMENT_END	{printf("encontrei um document_stmt\n");}
+document_stmt:	T_DOCUMENT stmt_list T_DOCUMENT_END	{
+		printf("encontrei um document_stmt\n");
+		//fclose(fp);
+	}
 ;
 
 stmt_list: 	stmt_list stmt
-	 |	stmt {	} 
+	 |	stmt
 ;
 
 //aqui eh onde coloca todos os tipos de stmts diferentes
 stmt:
 		//escrever html de texto em negrito.
-			text_bf_stmt		{printf("Texto em negrito: %s\n",$1);}
+			text_bf_stmt		{
+				printf("Texto em negrito: %s\n",$1);
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s",$1);
+				fclose(fp);
+			}
 		//escrever html de texto em italico.
-		|	text_it_stmt 		{printf("%s\n",$1);}
-		|	graphics_stmt		{printf("encontrei graphics_stmt\n");}
-		|	make_title_stmt		{printf("%s\n",$1);}
-		|	cite_stmt		{printf("encontrei cite_stmt\n");}	
-		|	math_mode_stmt	{printf("%s\n",$1);}
+		|	text_it_stmt 		{
+				printf("%s\n",$1);
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s",$1);
+				fclose(fp);
+			}
+		|	graphics_stmt		{
+				printf("encontrei graphics_stmt\n");
+				
+			}
+		|	make_title_stmt		{
+				printf("%s\n",$1);
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s",$1);
+				fclose(fp);
+			}
+		|	cite_stmt		{
+				printf("encontrei cite_stmt\n");
+			
+			}	
+		|	math_mode_stmt	{
+				printf("%s\n",$1);
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s",$1);
+				fclose(fp);
+			}
 		//escrever html de texto.
-		| 	itemize_stmt 	{printf("itemize\n");}
+		| 	itemize_stmt 	{
+				printf("itemize\n");
+			
+			}
 		|	T_STRING		{
 			//$$ = concat(2,$$,$1);
-			printf("%s ",$1);
-		}
+				printf("%s ",$1);
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s ",$1);
+				fclose(fp);
+			}
+		|	T_BIBLIOGRAPHY T_ENTER bibliography_stmt T_BIBLIOGRAPHY_END	{
+				printf("bibliography stmt:\n %s\n", $2);
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s",$2);
+				fclose(fp);
+			}
+		|	T_ENTER {
+				FILE *fp = fopen("projeto1.html","a");
+				fwrite("\n",1,1,fp);
+				fclose(fp);
+			}
 ;
 
 //aqui ja eh um fork do stmt
 text_bf_stmt:
 		T_TEXTBF '{' expression_stmt '}'{
-			$$ = $3;
+			$$ = concat(2,"texto em negrito: ",$3);
 			//printf("encontrei o T_TEXTBF\n");
 		}
 ;
@@ -119,15 +186,18 @@ math_mode_stmt:
 		'$' expression_stmt '$' {
 			$$ = concat(2,"math_mode: ",$2);
 		}
+		| '$' T_OMEGA '(' expression_stmt ')' '$'{printf("math mode omega\n");
+		}
+;
 
 itemize_stmt:
-		T_ITEMIZE  item_st_list T_ITEMIZE_END {
+		T_ITEMIZE item_st_list T_ITEMIZE_END {
 		printf("itemize_stmt\n");
 	}
 ;
 
 item_st_list: item_st
-	| item_st item_st_list
+	| item_st_list item_st 
 ;
 
 item_st: T_ITEM item_st_mark expression_stmt tst_stmt
@@ -146,6 +216,7 @@ item_st_mark:
 	
 expression_stmt : T_STRING		{$$ = $1;}
       | expression_stmt T_STRING	{$$ = concat(3,$1," ",$2);}
+	  | expression_stmt T_ENTER T_STRING	{$$ = concat(3,$1,$2,$3);}
 ;
 
 graphics_stmt:
@@ -153,6 +224,26 @@ graphics_stmt:
 		printf("Imagem aqui\n");
 	}
 ;
+
+bibliography_stmt: bibitem_stmt
+	//| bibliography_stmt bibitem_stmt { 
+	//	$$ = concat(2, $1, $2);
+	//}
+	| bibliography_stmt bibitem_stmt { 
+		$$ = concat(2, $1, $2);
+	}
+	//|	enter_stmt_valid bibliography_stmt enter_stmt_valid bibitem_stmt { 
+	//	$$ = concat(4, $1, $2, $3, $4);
+	//}
+	//|	
+;
+	
+bibitem_stmt:
+	T_BIBITEM '{' expression_stmt '}' expression_stmt {
+		printf("\nachei um tbibitem:\n %s\n",$5);
+		$$ = concat(5,"bibitem: ", $3, " ", $5, "\n");
+	}
+;	
 
 %%
  

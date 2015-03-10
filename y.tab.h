@@ -54,7 +54,10 @@
      T_TITLE = 270,
      T_CITE = 271,
      T_DOCUMENT_END = 272,
-     T_DOCUMENT = 273
+     T_DOCUMENT = 273,
+     T_OMEGA = 274,
+     T_BIBITEM = 275,
+     T_ENTER = 276
    };
 #endif
 /* Tokens.  */
@@ -74,6 +77,9 @@
 #define T_CITE 271
 #define T_DOCUMENT_END 272
 #define T_DOCUMENT 273
+#define T_OMEGA 274
+#define T_BIBITEM 275
+#define T_ENTER 276
 
 
 
@@ -91,7 +97,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 95 "y.tab.h"
+#line 101 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

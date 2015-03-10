@@ -6,9 +6,10 @@ USEPACKAGE \\usepackage(\[[a-zA-Z0-9]*\])?(\{[a-zA-Z0-9]*\})
 DOCUMENT_CLASS \\documentclass(\[.*\])?(\{.*\})
 AUTHOR \\author(\{.*\})
 
-STRING ([a-zA-Z0-9]|\.|\-|\,|\\$|\:)+
+STRING ([a-zA-Z0-9]|\.|\-|\,|\\$|\:|\/)+([a-zA-Z0-9]|\.|\-|\,|\\$|\:|\/|\n)*
 WHITESPACE [ \r\t]+
 MARCADOR (\[([0-9a-zA-Z.()\-]*)\])
+ENTER \n
 ANY_CHAR .
 
 %option case-insensitive
@@ -19,7 +20,8 @@ ANY_CHAR .
 {USEPACKAGE} /* ignore */ ;
 {DOCUMENT_CLASS} /* ignore */ ;
 {AUTHOR} /* ignore */ ;
-
+"\\bibitem"			{return T_BIBITEM;}
+"\\Omega"			{return T_OMEGA;}
 "\\textbf"			{return T_TEXTBF;}
 "\\textit"			{return T_TEXTIT;}
 "\\begin{thebibliography}"	{return T_BIBLIOGRAPHY;}
@@ -40,13 +42,17 @@ ANY_CHAR .
 ")"		{return ')';} 
 ";"		{return ';';}
 
-{MARCADOR} {
-	return T_MARCADOR;
-}
-
 {STRING} {	
 	yylval.str = (char *) strdup(yytext);
 	return T_STRING;
+}
+
+{ENTER} {
+	return T_ENTER;
+}
+
+{MARCADOR} {
+	return T_MARCADOR;
 }
 
 {ANY_CHAR} {
