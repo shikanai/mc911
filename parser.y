@@ -35,7 +35,7 @@ char *title;
 %token T_ENTER
 
 %type <str> stmt text_bf_stmt text_it_stmt expression_stmt math_mode_stmt title_stmt make_title_stmt document_stmt stmt_list itemize_stmt item_st_list item_st
-%type <str> bibliography_stmt bibitem_stmt T_ENTER item_st_mark tst_stmt T_MARCADOR graphics_stmt//enter_stmt_valid
+%type <str> bibliography_stmt bibitem_stmt T_ENTER item_st_mark tst_stmt T_MARCADOR graphics_stmt cite_stmt
 
 %start start_stmt
 
