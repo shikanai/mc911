@@ -6,6 +6,8 @@
 
 char *concat(int count, ...);
 char *title;
+char references[100][100];
+int reference_counter=0;
 
 %}
  
