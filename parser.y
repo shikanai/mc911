@@ -137,7 +137,7 @@ stmt:
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",$3);
 				fclose(fp);
-				char str[300],toprint[200],i_str[4];
+				char str[500],toprint[200],i_str[4];
 				char *pointer_to_ref;
 				//reescrevendo cite...
 				int i,k,count;
