@@ -34,8 +34,8 @@ char *title;
 %token T_BIBITEM
 %token T_ENTER
 
-%type <str> stmt text_bf_stmt text_it_stmt expression_stmt math_mode_stmt title_stmt make_title_stmt document_stmt stmt_list
-%type <str> bibliography_stmt bibitem_stmt T_ENTER //enter_stmt_valid
+%type <str> stmt text_bf_stmt text_it_stmt expression_stmt math_mode_stmt title_stmt make_title_stmt document_stmt stmt_list itemize_stmt item_st_list item_st
+%type <str> bibliography_stmt bibitem_stmt T_ENTER item_st_mark tst_stmt T_MARCADOR graphics_stmt//enter_stmt_valid
 
 %start start_stmt
 
@@ -96,12 +96,14 @@ stmt:
 			}
 		|	graphics_stmt		{
 				printf("encontrei graphics_stmt\n");
-				
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s",$1);
+				fclose(fp);				
 			}
 		|	make_title_stmt		{
 				printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
-				fprintf(fp,"<h1>%s</h1>",$1);
+				fprintf(fp,"<head><title>%s</title></head><h1>%s</h1>\n",$1, $1);
 				fclose(fp);
 			}
 		|	cite_stmt		{
@@ -116,8 +118,10 @@ stmt:
 			}
 		//escrever html de texto.
 		| 	itemize_stmt 	{
-				printf("itemize\n");
-			
+				//printf("itemize\n");
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"%s",$1);
+				fclose(fp);			
 			}
 		|	T_STRING		{
 			//$$ = concat(2,$$,$1);
@@ -134,7 +138,7 @@ stmt:
 			}
 		|	T_ENTER {
 				FILE *fp = fopen("projeto1.html","a");
-				fwrite("<br>",4,1,fp);
+				fwrite("<br>\n",4,1,fp);
 				fclose(fp);
 			}
 ;
@@ -171,7 +175,6 @@ title_stmt:
 
 make_title_stmt:
 		T_MAKETITLE{
-			//printf("title: %s\n", title);
 			$$ = title;
 		}
 ;
@@ -191,17 +194,21 @@ math_mode_stmt:
 ;
 
 itemize_stmt:
-		T_ITEMIZE T_ENTER item_st_list T_ITEMIZE_END T_ENTER{
-		printf("itemize_stmt\n");
+		T_ITEMIZE T_ENTER item_st_list T_ITEMIZE_END T_ENTER	{
+		    $$ = concat(5,"<ul>","<br>\n",$3,"</ul>","<br>\n");
 	}
 ;
 
-item_st_list: item_st
-	| item_st_list item_st 
+item_st_list: item_st			{$$ = $1;}
+	| item_st_list item_st 		{$$ = concat(3,$1,"\n",$2);}
 ;
 
-item_st: T_ITEM item_st_mark expression_stmt T_ENTER tst_stmt {printf("Item\n");}
-	| T_ITEM item_st_mark expression_stmt T_ENTER
+item_st: T_ITEM item_st_mark expression_stmt tst_stmt {
+	      $$ = concat(6,"<li> ",$2," ",$3,"</li>",$4);
+	}
+	| T_ITEM item_st_mark expression_stmt {
+	      $$ = concat(5,"<li> ",$2," ",$3,"</li>");
+	}
 ;
 		
 tst_stmt:
@@ -210,19 +217,21 @@ tst_stmt:
 		
 item_st_mark: 
 		T_MARCADOR {
-		printf("encontrei marcador\n");
+		    $$ = $1;
 	}
-	| /* Vazio */
+	| /* Vazio */{
+	      $$ = " ";
+	  }
 ;
 	
 expression_stmt : T_STRING		{$$ = $1;}
       | expression_stmt T_STRING	{$$ = concat(3,$1," ",$2);}
-	  | expression_stmt T_ENTER	{$$ = concat(2,$1,"<br>");}
+      | expression_stmt T_ENTER		{$$ = concat(2,$1," <br>\n ");}
 ;
 
 graphics_stmt:
 	T_GRAPHICS '{' expression_stmt '}' {
-		printf("Imagem aqui\n");
+		$$ = concat(3,"<br>\n<img src=\"",$3,"\">");
 	}
 ;
 
@@ -242,7 +251,7 @@ bibliography_stmt: bibitem_stmt
 bibitem_stmt:
 	T_BIBITEM '{' expression_stmt '}' expression_stmt {
 		printf("\nachei um tbibitem:\n %s\n",$5);
-		$$ = concat(4,"bibitem: ", $3, " ", $5);
+/* 		$$ = concat(4,"bibitem: ", $3, " ", $5); */
 	}
 ;	
 
