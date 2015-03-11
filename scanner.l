@@ -52,6 +52,7 @@ ANY_CHAR .
 }
 
 {MARCADOR} {
+	yylval.str = (char *) strdup(yytext);
 	return T_MARCADOR;
 }
 
