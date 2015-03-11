@@ -251,7 +251,7 @@ bibliography_stmt: bibitem_stmt
 bibitem_stmt:
 	T_BIBITEM '{' expression_stmt '}' expression_stmt {
 		printf("\nachei um tbibitem:\n %s\n",$5);
-/* 		$$ = concat(4,"bibitem: ", $3, " ", $5); */
+ 		$$ = concat(4,"bibitem: ", $3, " ", $5);
 	}
 ;	
 
