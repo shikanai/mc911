@@ -107,8 +107,10 @@ stmt:
 				fclose(fp);
 			}
 		|	cite_stmt		{
+				FILE *fp = fopen("projeto1.html","a");
+				fprintf(fp,"<CITE>%s</CITE>",$1);
+				fclose(fp);
 				printf("encontrei cite_stmt\n");
-			
 			}	
 		|	math_mode_stmt	{
 				printf("%s\n",$1);
@@ -135,6 +137,47 @@ stmt:
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",$3);
 				fclose(fp);
+				char str[300],toprint[200],i_str[4];
+				char *pointer_to_ref;
+				//reescrevendo cite...
+				int i,k,count;
+				fp = fopen("projeto1.html","r");
+				FILE *newfp = fopen("projeto_bkp.html","a");
+
+				while(fgets ( str, sizeof(str), fp ) != NULL){
+					for(i=0;i<reference_counter;i++){
+						pointer_to_ref = strstr(str,references[i]);
+						if(pointer_to_ref!=NULL){
+							printf("encontrei:%s\n",references[i]);
+							strcpy(toprint,"<CITE>");
+							//strcat(toprint,"[");
+							sprintf(i_str,"%d",i+1);
+							strcat(toprint,i_str);
+							//strcat(toprint,"]");
+							count = strlen(references[i]) - strlen(toprint) - 7; 
+							printf("count: %d\n",count);
+							for(k=0;k<count;k++){
+								strcat(toprint," ");
+							}
+							strcat(toprint,"</CITE>");
+							printf("toprint: %s\n",toprint);
+							strncpy(pointer_to_ref, toprint,strlen(toprint));
+						}
+					}
+
+					fputs(str,newfp);
+				}
+				fclose(fp);
+				fclose(newfp);
+				if( remove("projeto1.html") != 0 ){
+    					printf("Error deleting file");
+				}else{
+					printf("consegui remover arquivo. renomeando o bkp\n");
+					if(rename("projeto_bkp.html","projeto1.html")){
+						printf("erro ao renomear arquivo\n");
+					}	
+				}
+				
 			}
 		|	T_ENTER {
 				FILE *fp = fopen("projeto1.html","a");
@@ -181,6 +224,7 @@ make_title_stmt:
 
 cite_stmt:
 		T_CITE '{' expression_stmt '}'{
+			$$ = $3;
 			printf("encontrei cite, adicionar numero de referencia que se encontra no thebibliography\n");
 		}
 ;
@@ -250,8 +294,14 @@ bibliography_stmt: bibitem_stmt
 	
 bibitem_stmt:
 	T_BIBITEM '{' expression_stmt '}' expression_stmt {
+		char referencia[200];
+		strcpy(referencia,"<CITE>");
+		strcat(referencia,$3);
+		strcat(referencia,"</CITE>");
+		strcpy(references[reference_counter],referencia);
+		reference_counter++;
 		printf("\nachei um tbibitem:\n %s\n",$5);
- 		$$ = concat(4,"bibitem: ", $3, " ", $5);
+		$$ = concat(4,"bibitem: ", $3, " ", $5);
 	}
 ;	
 
