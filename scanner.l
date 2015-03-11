@@ -6,7 +6,7 @@ USEPACKAGE \\usepackage(\[[a-zA-Z0-9]*\])?(\{[a-zA-Z0-9]*\})
 DOCUMENT_CLASS \\documentclass(\[.*\])?(\{.*\})
 AUTHOR \\author(\{.*\})
 
-STRING ([a-zA-Z0-9]|\.|\-|\,|\\$|\:|\/)+([a-zA-Z0-9]|\.|\-|\,|\\$|\:|\/|\n)*
+STRING ([a-zA-Z0-9]|\.|\-|\,|\\$|\:|\/)+([a-zA-Z0-9]|\.|\-|\,|\\$|\:|\/)*
 WHITESPACE [ \r\t]+
 MARCADOR (\[([0-9a-zA-Z.()\-]*)\])
 ENTER \n

@@ -127,9 +127,9 @@ stmt:
 				fclose(fp);
 			}
 		|	T_BIBLIOGRAPHY T_ENTER bibliography_stmt T_BIBLIOGRAPHY_END	{
-				printf("bibliography stmt:\n %s\n", $2);
+				printf("bibliography stmt:\n %s\n", $3);
 				FILE *fp = fopen("projeto1.html","a");
-				fprintf(fp,"%s",$2);
+				fprintf(fp,"%s",$3);
 				fclose(fp);
 			}
 		|	T_ENTER {
@@ -217,7 +217,7 @@ item_st_mark:
 	
 expression_stmt : T_STRING		{$$ = $1;}
       | expression_stmt T_STRING	{$$ = concat(3,$1," ",$2);}
-	  | expression_stmt T_ENTER T_STRING	{$$ = concat(3,$1,$2,$3);}
+	  | expression_stmt T_ENTER	{$$ = concat(2,$1,"<br>");}
 ;
 
 graphics_stmt:
@@ -242,7 +242,7 @@ bibliography_stmt: bibitem_stmt
 bibitem_stmt:
 	T_BIBITEM '{' expression_stmt '}' expression_stmt {
 		printf("\nachei um tbibitem:\n %s\n",$5);
-		$$ = concat(5,"bibitem: ", $3, " ", $5, "\n");
+		$$ = concat(4,"bibitem: ", $3, " ", $5);
 	}
 ;	
 

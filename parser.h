@@ -58,7 +58,12 @@ extern int yydebug;
     T_BIBLIOGRAPHY_END = 268,
     T_MAKETITLE = 269,
     T_TITLE = 270,
-    T_CITE = 271
+    T_CITE = 271,
+    T_DOCUMENT_END = 272,
+    T_DOCUMENT = 273,
+    T_OMEGA = 274,
+    T_BIBITEM = 275,
+    T_ENTER = 276
   };
 #endif
 
@@ -67,12 +72,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 11 "parser.y" /* yacc.c:1909  */
+#line 12 "parser.y" /* yacc.c:1909  */
 
 	char *str;
 	int  *intval;
 
-#line 76 "parser.h" /* yacc.c:1909  */
+#line 81 "parser.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

@@ -14,5 +14,5 @@ scanner.c: scanner.l
 	$(FLEX)  -o scanner.c scanner.l
  
 clean:
-	rm -f scanner.c scanner.o parser.c parser.o parser.h parser
+	rm -f projeto1.html scanner.c scanner.o parser.c parser.o parser.h parser
 
