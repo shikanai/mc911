@@ -167,13 +167,18 @@ stmt:
 							printf("toprint: %s\n",toprint);
 							//quando o conteudo de cite tiver tamanho menor do que 2 digitos, trata especialmente.
 							if(strlen(references[i]) == 14){
+								pointer_to_ref[strlen(pointer_to_ref)+2] = '\0'; 
+								//printf("cite antes1 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 								memmove(pointer_to_ref+2, pointer_to_ref, strlen(pointer_to_ref));
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
-								//printf("encontrei cite: %s\n",pointer_to_ref);
+								
+								printf("cite dps1 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 							} else if (strlen(references[i]) == 15){
+								pointer_to_ref[strlen(pointer_to_ref)+1] = '\0';
+								//printf("cite antes2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 								memmove(pointer_to_ref+1, pointer_to_ref, strlen(pointer_to_ref));
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
-								//printf("encontrei cite: %s\n",pointer_to_ref);
+								printf("cite dps2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 							}
 							else{
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
