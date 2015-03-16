@@ -139,7 +139,7 @@ stmt:
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",$3);
 				fclose(fp);
-				char str[500],toprint[200],i_str[4];
+				char str[500],toprint[200],i_str[4],str_final[500];
 				char *pointer_to_ref;
 				//reescrevendo cite...
 				int i,k,count;
@@ -152,18 +152,34 @@ stmt:
 						if(pointer_to_ref!=NULL){
 							printf("encontrei:%s\n",references[i]);
 							strcpy(toprint,"<CITE>");
-							//strcat(toprint,"[");
+							strcat(toprint,"[");
 							sprintf(i_str,"%d",i+1);
 							strcat(toprint,i_str);
-							//strcat(toprint,"]");
+							strcat(toprint,"]");
+							
 							count = strlen(references[i]) - strlen(toprint) - 7; 
 							printf("count: %d\n",count);
 							for(k=0;k<count;k++){
 								strcat(toprint," ");
 							}
+							
 							strcat(toprint,"</CITE>");
 							printf("toprint: %s\n",toprint);
-							strncpy(pointer_to_ref, toprint,strlen(toprint));
+							//quando o conteudo de cite tiver tamanho menor do que 2 digitos, trata especialmente.
+							if(strlen(references[i]) == 14){
+								memmove(pointer_to_ref+2, pointer_to_ref, strlen(pointer_to_ref));
+								strncpy(pointer_to_ref, toprint,strlen(toprint));
+								//printf("encontrei cite: %s\n",pointer_to_ref);
+							} else if (strlen(references[i]) == 15){
+								memmove(pointer_to_ref+1, pointer_to_ref, strlen(pointer_to_ref));
+								strncpy(pointer_to_ref, toprint,strlen(toprint));
+								//printf("encontrei cite: %s\n",pointer_to_ref);
+							}
+							else{
+								strncpy(pointer_to_ref, toprint,strlen(toprint));
+							}
+							
+							
 						}
 					}
 
@@ -303,7 +319,7 @@ bibitem_stmt:
 		strcpy(references[reference_counter],referencia);
 		reference_counter++;
 		printf("\nachei um tbibitem:\n %s\n",$5);
-		$$ = concat(4,"bibitem: ", $3, " ", $5);
+		$$ = concat(5,"[", $3,"]", " - ", $5);
 	}
 ;	
 
