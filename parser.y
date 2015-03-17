@@ -37,7 +37,7 @@ int reference_counter=0;
 %token T_ENTER
 
 %type <str> stmt text_bf_stmt text_it_stmt expression_stmt math_mode_stmt title_stmt make_title_stmt document_stmt stmt_list itemize_stmt item_st_list item_st
-%type <str> bibliography_stmt bibitem_stmt T_ENTER item_st_mark tst_stmt T_MARCADOR graphics_stmt cite_stmt
+%type <str> bibliography_stmt bibitem_stmt T_ENTER item_st_mark tst_stmt T_MARCADOR graphics_stmt cite_stmt T_OMEGA
 
 %start start_stmt
 
@@ -72,7 +72,10 @@ enter_stmt:	enter_stmt T_ENTER
 //inicia o documento
 document_stmt:	T_DOCUMENT stmt_list T_DOCUMENT_END	{
 		printf("encontrei um document_stmt\n");
-		//fclose(fp);
+		FILE *fp = fopen("projeto1.html","a");
+		fwrite("<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax: {inlineMath: [[\"$\",\"$\"],[\"\\(\",\"\\)\"]]}});</script>\n",129,1,fp);
+		fwrite("<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full\"></script>\n",125,1,fp);
+		fclose(fp);
 	}
 ;
 
@@ -254,9 +257,10 @@ cite_stmt:
 
 math_mode_stmt:
 		'$' expression_stmt '$' {
-			$$ = concat(2,"math_mode: ",$2);
+			$$ = concat(3,"$",$2,"$ ");
 		}
-		| '$' T_OMEGA '(' expression_stmt ')' '$'{printf("math mode omega\n");
+		| '$' T_OMEGA '(' expression_stmt ')' '$'{
+			$$ = concat(6,"$","\\Omega","(",$4,")","$ ");
 		}
 ;
 
