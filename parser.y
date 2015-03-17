@@ -71,7 +71,7 @@ enter_stmt:	enter_stmt T_ENTER
 		
 //inicia o documento
 document_stmt:	T_DOCUMENT stmt_list T_DOCUMENT_END	{
-		printf("encontrei um document_stmt\n");
+		//printf("encontrei um document_stmt\n");
 		FILE *fp = fopen("projeto1.html","a");
 		fwrite("<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax: {inlineMath: [[\"$\",\"$\"],[\"\\(\",\"\\)\"]]}});</script>\n",129,1,fp);
 		fwrite("<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full\"></script>\n",125,1,fp);
@@ -87,26 +87,26 @@ stmt_list: 	stmt_list stmt
 stmt:
 		//escrever html de texto em negrito.
 			text_bf_stmt		{
-				printf("Texto em negrito: %s\n",$1);
+				//printf("Texto em negrito: %s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<b>%s</b>",$1);
 				fclose(fp);
 			}
 		//escrever html de texto em italico.
 		|	text_it_stmt 		{
-				printf("%s\n",$1);
+				//printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<i>%s</i>",$1);
 				fclose(fp);
 			}
 		|	graphics_stmt		{
-				printf("encontrei graphics_stmt\n");
+				//printf("encontrei graphics_stmt\n");
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",$1);
 				fclose(fp);				
 			}
 		|	make_title_stmt		{
-				printf("%s\n",$1);
+				//printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<head><title>%s</title></head><h1>%s</h1>\n",$1, $1);
 				fclose(fp);
@@ -115,10 +115,10 @@ stmt:
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<CITE>%s</CITE>",$1);
 				fclose(fp);
-				printf("encontrei cite_stmt\n");
+				//printf("encontrei cite_stmt\n");
 			}	
 		|	math_mode_stmt	{
-				printf("%s\n",$1);
+				//printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",$1);
 				fclose(fp);
@@ -132,13 +132,13 @@ stmt:
 			}
 		|	T_STRING		{
 			//$$ = concat(2,$$,$1);
-				printf("%s ",$1);
+				//printf("%s ",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s ",$1);
 				fclose(fp);
 			}
 		|	T_BIBLIOGRAPHY T_ENTER bibliography_stmt T_BIBLIOGRAPHY_END	{
-				printf("bibliography stmt:\n %s\n", $3);
+				//printf("bibliography stmt:\n %s\n", $3);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",$3);
 				fclose(fp);
@@ -153,7 +153,7 @@ stmt:
 					for(i=0;i<reference_counter;i++){
 						pointer_to_ref = strstr(str,references[i]);
 						if(pointer_to_ref!=NULL){
-							printf("encontrei:%s\n",references[i]);
+							//printf("encontrei:%s\n",references[i]);
 							strcpy(toprint,"<CITE>");
 							strcat(toprint,"[");
 							sprintf(i_str,"%d",i+1);
@@ -161,13 +161,13 @@ stmt:
 							strcat(toprint,"]");
 							
 							count = strlen(references[i]) - strlen(toprint) - 7; 
-							printf("count: %d\n",count);
+							//printf("count: %d\n",count);
 							for(k=0;k<count;k++){
 								strcat(toprint," ");
 							}
 							
 							strcat(toprint,"</CITE>");
-							printf("toprint: %s\n",toprint);
+							//printf("toprint: %s\n",toprint);
 							//quando o conteudo de cite tiver tamanho menor do que 2 digitos, trata especialmente.
 							if(strlen(references[i]) == 14){
 								pointer_to_ref[strlen(pointer_to_ref)+2] = '\0'; 
@@ -175,13 +175,13 @@ stmt:
 								memmove(pointer_to_ref+2, pointer_to_ref, strlen(pointer_to_ref));
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
 								
-								printf("cite dps1 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
+								//printf("cite dps1 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 							} else if (strlen(references[i]) == 15){
 								pointer_to_ref[strlen(pointer_to_ref)+1] = '\0';
 								//printf("cite antes2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 								memmove(pointer_to_ref+1, pointer_to_ref, strlen(pointer_to_ref));
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
-								printf("cite dps2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
+								//printf("cite dps2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 							}
 							else{
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
@@ -251,7 +251,7 @@ make_title_stmt:
 cite_stmt:
 		T_CITE '{' expression_stmt '}'{
 			$$ = $3;
-			printf("encontrei cite, adicionar numero de referencia que se encontra no thebibliography\n");
+			//printf("encontrei cite, adicionar numero de referencia que se encontra no thebibliography\n");
 		}
 ;
 
@@ -327,7 +327,7 @@ bibitem_stmt:
 		strcat(referencia,"</CITE>");
 		strcpy(references[reference_counter],referencia);
 		reference_counter++;
-		printf("\nachei um tbibitem:\n %s\n",$5);
+		//printf("\nachei um tbibitem:\n %s\n",$5);
 		$$ = concat(5,"[", $3,"]", " - ", $5);
 	}
 ;	
