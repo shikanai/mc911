@@ -132,17 +132,18 @@ stmt:
 			}
 		|	T_STRING		{
 			//$$ = concat(2,$$,$1);
-				//printf("%s ",$1);
+				//printf("T_STRING: %s ",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s ",$1);
 				fclose(fp);
 			}
 		|	T_BIBLIOGRAPHY T_ENTER bibliography_stmt T_BIBLIOGRAPHY_END	{
 				//printf("bibliography stmt:\n %s\n", $3);
+				char align_array[50];
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",$3);
 				fclose(fp);
-				char str[500],toprint[200],i_str[4],str_final[500];
+				char str[500000],toprint[200],i_str[4];
 				char *pointer_to_ref;
 				//reescrevendo cite...
 				int i,k,count;
@@ -150,6 +151,7 @@ stmt:
 				FILE *newfp = fopen("projeto_bkp.html","a");
 
 				while(fgets ( str, sizeof(str), fp ) != NULL){
+					printf("str: %s\n",str);
 					for(i=0;i<reference_counter;i++){
 						pointer_to_ref = strstr(str,references[i]);
 						if(pointer_to_ref!=NULL){
@@ -190,7 +192,8 @@ stmt:
 							
 						}
 					}
-
+					strcpy(align_array,"<p align=\"justify\">");
+					//fputs(align_array,newfp);
 					fputs(str,newfp);
 				}
 				fclose(fp);
@@ -207,7 +210,7 @@ stmt:
 			}
 		|	T_ENTER {
 				FILE *fp = fopen("projeto1.html","a");
-				fwrite("<br>\n",4,1,fp);
+				fwrite("<br>\n",5,1,fp);
 				fclose(fp);
 			}
 ;
@@ -297,7 +300,7 @@ item_st_mark:
 	
 expression_stmt : T_STRING		{$$ = $1;}
       | expression_stmt T_STRING	{$$ = concat(3,$1," ",$2);}
-      | expression_stmt T_ENTER		{$$ = concat(2,$1," <br>\n ");}
+      | expression_stmt T_ENTER		{$$ = concat(2,$1," <br>\n");}
 ;
 
 graphics_stmt:
@@ -322,13 +325,16 @@ bibliography_stmt: bibitem_stmt
 bibitem_stmt:
 	T_BIBITEM '{' expression_stmt '}' expression_stmt {
 		char referencia[200];
+		char reference_counter_str[3];
 		strcpy(referencia,"<CITE>");
 		strcat(referencia,$3);
 		strcat(referencia,"</CITE>");
 		strcpy(references[reference_counter],referencia);
 		reference_counter++;
+		itoa(reference_counter,reference_counter_str,10);
 		//printf("\nachei um tbibitem:\n %s\n",$5);
-		$$ = concat(5,"[", $3,"]", " - ", $5);
+		$$ = concat(8,"[",reference_counter_str,"]","{", $3,"}", " - ", $5);
+		
 	}
 ;	
 

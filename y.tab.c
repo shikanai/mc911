@@ -485,11 +485,11 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint16 yyrline[] =
 {
        0,    49,    49,    50,    51,    52,    53,    54,    55,    56,
-      57,    58,    59,    60,    64,    65,    73,    79,    80,    86,
-      93,    99,   105,   111,   117,   124,   130,   137,   205,   214,
-     221,   228,   243,   249,   256,   259,   264,   269,   270,   273,
-     276,   282,   286,   289,   294,   295,   296,   300,   305,   309,
-     319
+      57,    58,    59,    60,    64,    65,    73,    82,    83,    89,
+      96,   102,   108,   114,   120,   127,   133,   140,   211,   220,
+     227,   234,   249,   255,   262,   265,   271,   276,   277,   280,
+     283,   289,   293,   296,   301,   302,   303,   307,   312,   316,
+     326
 };
 #endif
 
@@ -1460,17 +1460,20 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 73 "parser.y"
     {
-		printf("encontrei um document_stmt\n");
-		//fclose(fp);
+		//printf("encontrei um document_stmt\n");
+		FILE *fp = fopen("projeto1.html","a");
+		fwrite("<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax: {inlineMath: [[\"$\",\"$\"],[\"\\(\",\"\\)\"]]}});</script>\n",129,1,fp);
+		fwrite("<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full\"></script>\n",125,1,fp);
+		fclose(fp);
 	}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 86 "parser.y"
+#line 89 "parser.y"
     {
-				printf("Texto em negrito: %s\n",(yyvsp[(1) - (1)].str));
+				//printf("Texto em negrito: %s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<b>%s</b>",(yyvsp[(1) - (1)].str));
 				fclose(fp);
@@ -1480,9 +1483,9 @@ yyreduce:
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 93 "parser.y"
+#line 96 "parser.y"
     {
-				printf("%s\n",(yyvsp[(1) - (1)].str));
+				//printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<i>%s</i>",(yyvsp[(1) - (1)].str));
 				fclose(fp);
@@ -1492,9 +1495,9 @@ yyreduce:
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 99 "parser.y"
+#line 102 "parser.y"
     {
-				printf("encontrei graphics_stmt\n");
+				//printf("encontrei graphics_stmt\n");
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",(yyvsp[(1) - (1)].str));
 				fclose(fp);				
@@ -1504,9 +1507,9 @@ yyreduce:
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 105 "parser.y"
+#line 108 "parser.y"
     {
-				printf("%s\n",(yyvsp[(1) - (1)].str));
+				//printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<head><title>%s</title></head><h1>%s</h1>\n",(yyvsp[(1) - (1)].str), (yyvsp[(1) - (1)].str));
 				fclose(fp);
@@ -1516,21 +1519,21 @@ yyreduce:
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 111 "parser.y"
+#line 114 "parser.y"
     {
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"<CITE>%s</CITE>",(yyvsp[(1) - (1)].str));
 				fclose(fp);
-				printf("encontrei cite_stmt\n");
+				//printf("encontrei cite_stmt\n");
 			}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 117 "parser.y"
+#line 120 "parser.y"
     {
-				printf("%s\n",(yyvsp[(1) - (1)].str));
+				//printf("%s\n",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",(yyvsp[(1) - (1)].str));
 				fclose(fp);
@@ -1540,7 +1543,7 @@ yyreduce:
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 124 "parser.y"
+#line 127 "parser.y"
     {
 				//printf("itemize\n");
 				FILE *fp = fopen("projeto1.html","a");
@@ -1552,10 +1555,10 @@ yyreduce:
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 130 "parser.y"
+#line 133 "parser.y"
     {
 			//$$ = concat(2,$$,$1);
-				printf("%s ",(yyvsp[(1) - (1)].str));
+				//printf("T_STRING: %s ",$1);
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s ",(yyvsp[(1) - (1)].str));
 				fclose(fp);
@@ -1565,13 +1568,14 @@ yyreduce:
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 137 "parser.y"
+#line 140 "parser.y"
     {
-				printf("bibliography stmt:\n %s\n", (yyvsp[(3) - (4)].str));
+				//printf("bibliography stmt:\n %s\n", $3);
+				char align_array[50];
 				FILE *fp = fopen("projeto1.html","a");
 				fprintf(fp,"%s",(yyvsp[(3) - (4)].str));
 				fclose(fp);
-				char str[500],toprint[200],i_str[4],str_final[500];
+				char str[500000],toprint[200],i_str[4];
 				char *pointer_to_ref;
 				//reescrevendo cite...
 				int i,k,count;
@@ -1579,10 +1583,11 @@ yyreduce:
 				FILE *newfp = fopen("projeto_bkp.html","a");
 
 				while(fgets ( str, sizeof(str), fp ) != NULL){
+					printf("str: %s\n",str);
 					for(i=0;i<reference_counter;i++){
 						pointer_to_ref = strstr(str,references[i]);
 						if(pointer_to_ref!=NULL){
-							printf("encontrei:%s\n",references[i]);
+							//printf("encontrei:%s\n",references[i]);
 							strcpy(toprint,"<CITE>");
 							strcat(toprint,"[");
 							sprintf(i_str,"%d",i+1);
@@ -1590,13 +1595,13 @@ yyreduce:
 							strcat(toprint,"]");
 							
 							count = strlen(references[i]) - strlen(toprint) - 7; 
-							printf("count: %d\n",count);
+							//printf("count: %d\n",count);
 							for(k=0;k<count;k++){
 								strcat(toprint," ");
 							}
 							
 							strcat(toprint,"</CITE>");
-							printf("toprint: %s\n",toprint);
+							//printf("toprint: %s\n",toprint);
 							//quando o conteudo de cite tiver tamanho menor do que 2 digitos, trata especialmente.
 							if(strlen(references[i]) == 14){
 								pointer_to_ref[strlen(pointer_to_ref)+2] = '\0'; 
@@ -1604,13 +1609,13 @@ yyreduce:
 								memmove(pointer_to_ref+2, pointer_to_ref, strlen(pointer_to_ref));
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
 								
-								printf("cite dps1 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
+								//printf("cite dps1 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 							} else if (strlen(references[i]) == 15){
 								pointer_to_ref[strlen(pointer_to_ref)+1] = '\0';
 								//printf("cite antes2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 								memmove(pointer_to_ref+1, pointer_to_ref, strlen(pointer_to_ref));
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
-								printf("cite dps2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
+								//printf("cite dps2 e len: %s %d\n",pointer_to_ref,strlen(pointer_to_ref));
 							}
 							else{
 								strncpy(pointer_to_ref, toprint,strlen(toprint));
@@ -1619,7 +1624,8 @@ yyreduce:
 							
 						}
 					}
-
+					strcpy(align_array,"<p align=\"justify\">");
+					//fputs(align_array,newfp);
 					fputs(str,newfp);
 				}
 				fclose(fp);
@@ -1639,10 +1645,10 @@ yyreduce:
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 205 "parser.y"
+#line 211 "parser.y"
     {
 				FILE *fp = fopen("projeto1.html","a");
-				fwrite("<br>\n",4,1,fp);
+				fwrite("<br>\n",5,1,fp);
 				fclose(fp);
 			}
     break;
@@ -1650,7 +1656,7 @@ yyreduce:
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 214 "parser.y"
+#line 220 "parser.y"
     {
 			(yyval.str) = concat(1,(yyvsp[(3) - (4)].str));
 			//printf("encontrei o T_TEXTBF\n");
@@ -1660,7 +1666,7 @@ yyreduce:
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 221 "parser.y"
+#line 227 "parser.y"
     {
 			(yyval.str) = concat(1,(yyvsp[(3) - (4)].str));
 			//printf("encontrei o T_TEXTIT\n");
@@ -1670,7 +1676,7 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 228 "parser.y"
+#line 234 "parser.y"
     {
 			//$$ = $3;
 			int title_size = 0;
@@ -1688,7 +1694,7 @@ yyreduce:
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 243 "parser.y"
+#line 249 "parser.y"
     {
 			(yyval.str) = title;
 		}
@@ -1697,34 +1703,35 @@ yyreduce:
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 249 "parser.y"
+#line 255 "parser.y"
     {
 			(yyval.str) = (yyvsp[(3) - (4)].str);
-			printf("encontrei cite, adicionar numero de referencia que se encontra no thebibliography\n");
+			//printf("encontrei cite, adicionar numero de referencia que se encontra no thebibliography\n");
 		}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 256 "parser.y"
+#line 262 "parser.y"
     {
-			(yyval.str) = concat(2,"math_mode: ",(yyvsp[(2) - (3)].str));
+			(yyval.str) = concat(3,"$",(yyvsp[(2) - (3)].str),"$ ");
 		}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 259 "parser.y"
-    {printf("math mode omega\n");
+#line 265 "parser.y"
+    {
+			(yyval.str) = concat(6,"$","\\Omega","(",(yyvsp[(4) - (6)].str),")","$ ");
 		}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 264 "parser.y"
+#line 271 "parser.y"
     {
 		    (yyval.str) = concat(5,"<ul>","<br>\n",(yyvsp[(3) - (5)].str),"</ul>","<br>\n");
 	}
@@ -1733,21 +1740,21 @@ yyreduce:
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 269 "parser.y"
+#line 276 "parser.y"
     {(yyval.str) = (yyvsp[(1) - (1)].str);}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 270 "parser.y"
+#line 277 "parser.y"
     {(yyval.str) = concat(3,(yyvsp[(1) - (2)].str),"\n",(yyvsp[(2) - (2)].str));}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 273 "parser.y"
+#line 280 "parser.y"
     {
 	      (yyval.str) = concat(6,"<li> ",(yyvsp[(2) - (4)].str)," ",(yyvsp[(3) - (4)].str),"</li>",(yyvsp[(4) - (4)].str));
 	}
@@ -1756,7 +1763,7 @@ yyreduce:
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 276 "parser.y"
+#line 283 "parser.y"
     {
 	      (yyval.str) = concat(5,"<li> ",(yyvsp[(2) - (3)].str)," ",(yyvsp[(3) - (3)].str),"</li>");
 	}
@@ -1765,7 +1772,7 @@ yyreduce:
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 286 "parser.y"
+#line 293 "parser.y"
     {
 		    (yyval.str) = (yyvsp[(1) - (1)].str);
 	}
@@ -1774,7 +1781,7 @@ yyreduce:
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 289 "parser.y"
+#line 296 "parser.y"
     {
 	      (yyval.str) = " ";
 	  }
@@ -1783,28 +1790,28 @@ yyreduce:
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 294 "parser.y"
+#line 301 "parser.y"
     {(yyval.str) = (yyvsp[(1) - (1)].str);}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 295 "parser.y"
+#line 302 "parser.y"
     {(yyval.str) = concat(3,(yyvsp[(1) - (2)].str)," ",(yyvsp[(2) - (2)].str));}
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 296 "parser.y"
-    {(yyval.str) = concat(2,(yyvsp[(1) - (2)].str)," <br>\n ");}
+#line 303 "parser.y"
+    {(yyval.str) = concat(2,(yyvsp[(1) - (2)].str)," <br>\n");}
     break;
 
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 300 "parser.y"
+#line 307 "parser.y"
     {
 		(yyval.str) = concat(3,"<br>\n<img src=\"",(yyvsp[(3) - (4)].str),"\">");
 	}
@@ -1813,7 +1820,7 @@ yyreduce:
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 309 "parser.y"
+#line 316 "parser.y"
     { 
 		(yyval.str) = concat(2, (yyvsp[(1) - (2)].str), (yyvsp[(2) - (2)].str));
 	}
@@ -1822,23 +1829,26 @@ yyreduce:
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 319 "parser.y"
+#line 326 "parser.y"
     {
 		char referencia[200];
+		char reference_counter_str[3];
 		strcpy(referencia,"<CITE>");
 		strcat(referencia,(yyvsp[(3) - (5)].str));
 		strcat(referencia,"</CITE>");
 		strcpy(references[reference_counter],referencia);
 		reference_counter++;
-		printf("\nachei um tbibitem:\n %s\n",(yyvsp[(5) - (5)].str));
-		(yyval.str) = concat(5,"[", (yyvsp[(3) - (5)].str),"]", " - ", (yyvsp[(5) - (5)].str));
+		itoa(reference_counter,reference_counter_str,10);
+		//printf("\nachei um tbibitem:\n %s\n",$5);
+		(yyval.str) = concat(8,"[",reference_counter_str,"]","{", (yyvsp[(3) - (5)].str),"}", " - ", (yyvsp[(5) - (5)].str));
+		
 	}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1842 "y.tab.c"
+#line 1852 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2050,7 +2060,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 331 "parser.y"
+#line 341 "parser.y"
 
  
 char* concat(int count, ...)

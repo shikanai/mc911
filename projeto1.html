@@ -1,17 +1,275 @@
-<br><head><title>Sistemas de recomendacoes</title></head><h1>Sistemas de recomendacoes</h1>
-<br><br><br><b>Introducao</b><br><br>O objetivo deste relatorio e descrever os assuntos estudados durante a <br>disciplina de MC032 no segundo semestre de 2010. O principal interesse <br>deste trabalho foi pesquisar na literatura sobre <br>o problema de sistemas de recomendacoes e diferentes abordagens para resolve-lo. <br>Na secao 2 e descrito em linhas gerais o que e um sistema de recomendacoes. <br>Nas secoes 3 e 4 sao mostradas as <br>principais ideias encontradas nos trabalhos , <br>respectivamente. <br>Na secao 5 encontra-se a conclusao do estudo e ideias para trabalhos futuros. <br><br><b>Sistemas de recomendacoes</b><br><br>Um sistema de recomendacoes tem como objetivo recomendar a usuarios <br>produtos que o agradem. Para isso, o sistema de recomedacoes se baseia <br>inicialmente em respostas ja conhecidas de outros usuarios e alguma <br>informacao sobre o usuario que deseja obter uma recomendacao. <br>O conjunto de informacao inicial que o sistema de recomendacoes ja <br>possui e utilizado para comparar com a informacao obtida do usuario <br>em questao para tentar deduzir quais outros produtos interessam <br>ao usuario. <br><br><b>Competitive Recommendation Systems</b><br><br><i>Introducao</i><br><br>A ideia basica desta abordagem e reduzir o problema de sistema de recomendacoes <br>no problema de reconstrucao de matrizes a partir de informacoes parciais da mesma. <br>Foram utilizadas estrategias de reconstrucao de matrizes <br>baseadas na tecnica de SVD, encontrando boas aproximacoes <br>para a matriz original <br><br><i>Divisao em tipos</i><br>Assume-se que os usuarios podem ser divididos em grupos com interesses semelhantes, <br>classificando-os em tipos. <br>Consideraremos que math_mode: kseja o numero de tipos, onde math_mode: ke <br>uma constante que nao depende do numero de usuarios. <br><br><i>Qualidade dos algoritmos</i><br><br>Um bom algoritmo de recomendacoes deve dar boas recomendacoes utilizando o minimo de <br>informacao possivel. Sao estabelecidas 2 metricas para medir a qualidade de um algoritmo <br>de recomendacoes. <br><br>Um algoritmo e math_mode: c-competitivomath_mode: paramath_mode: amostragemse usa somente math_mode: ck<br>linhas e colunas da matriz para recomendar mais produtos. <br><br>Um algoritmo e math_mode: f-competitivomath_mode: paramath_mode: utilidade<br>se faz boas recomendacoes a math_mode: fmusuarios, onde math_mode: me o numero de usuarios. <br><br><i>Notacao</i><br><br>Nesta secao, a seguinte notacao sera utilizada: <br><br><i>Reconstrucao de matrizes</i><br><br><i>Escolha das linhas</i><br><br>A escolha de um numero constante de linhas segue a ideia de que sao necessarios <br>alguns usuarios respondendo um questionario sobre todos os produtos para que os <br>outros usuarios sejam classificados a partir das respostas destes. Na pratica, empresas <br>pagam pessoas para o preenchimento desses formularios. <br><br>Portanto a partir da escolha das math_mode: aklinhas, podemos formar uma matriz math_mode: Vde tipos efetivos. <br><br><i>Escolha das colunas</i><br><br>A ideia de escolher um numero constante de colunas acontece pois todo usuario <br>que deseja obter uma recomendacao deve responder inicialmente um pequeno <br>questionario, dando alguma informacao sua para que o algoritmo de recomendacao <br><b>Ideia da prova</b><br><br>Primeiramente separa-se os casos em que o usuario faz parte do comite e quando <br>o usuario nao faz <br>Para o caso em que o usuario faz parte do comite, ele tera que fazer math_mode: Kprovas. <br>Para o caso em que o usuario nao esta no comite, e calculada a esperanca do numero <br>de provas que ele tera que fazer. Como a ordem dos produtos <br>recomendados e aleatoria, o numero de provas que um usuario tera que fazer <br>e uma variavel aleatoria geometrica. Logo, basta fazer a analise da esperanca <br>para essa variavel aleatoria <CITE>[2]</CITE>. <br>O resultado do teorema aparece com a esperanca do numero de provas para <br>cada caso. <br><br><i>Comite</i><br><br>A tecnica de criar um comite do algoritmo proposto possui serias <br>desvantagens. <br>A primeira delas e que a complexidade de recomendacao individual <br>e e, ja que os usuarios do comite tem que provar todos os <br>algoritmos. <br>Um segundo ponto contra esta tecnica e a existencia de usuarios desonestos, <br>que, quando escolhidos para o comite, atrapalham o funcionamento do <br>algoritmo de recomendacoes <CITE>[1]    </CITE>. <br><br><b>Conclusao e trabalhos futuros</b><br><br>Atraves destalgoritmose estudo, verificou-se a existencia de solucoes com abordagens <br>totalmente diferentes para o problema de sistemas de recomendacoes. Mas o mais <br>importante foi o aprendizado das tecnicas mais gerais para resolucao de problemas <br>como por exemplo SVD. <br>Potenciais trabalhos futuros sao a implementacao e comparacao dos algoritmos na pratica <br>ou alteracao neles para que ao inves de dispor de informacoes de colunas inteiras, os <br>algoritmos funcionem com posicoes esparsas na matriz. <br><br>[Boney96] - Boney, L., Tewfik, A.H., and Hamdy, K.N., Digital <br>
-  <br>
-  Watermarks for Audio Signals, Proceedings of the Third IEEE <br>
-  International Conference on Multimedia, pp. 473-480, June 1996. <br>
- [MG] - Goossens, M., Mittelbach, F., Samarin, A LaTeX Companion, Addison-Wesley, Reading, MA, 1994. <br>
- [HK] - Kopka, H., Daly P.W., A Guide to LaTeX, Addison-Wesley, Reading, MA, 1999. <br>
- [Pan] - Pan, D., A Tutorial on MPEG/Audio Compression, IEEE Multimedia, Vol.2, pp.60-74, Summer 1998. <br>
- <br><br><br><br><head><title>Sistemas de recomendacoes</title></head><h1>Sistemas de recomendacoes</h1>
-<br><br><br><b>Introducao</b><br><br>O objetivo deste relatorio e descrever os assuntos estudados durante a <br>disciplina de MC032 no segundo semestre de 2010. O principal interesse <br>deste trabalho foi pesquisar na literatura sobre <br>o problema de sistemas de recomendacoes e diferentes abordagens para resolve-lo. <br>Na secao 2 e descrito em linhas gerais o que e um sistema de recomendacoes. <br>Nas secoes 3 e 4 sao mostradas as <br>principais ideias encontradas nos trabalhos , <br>respectivamente. <br>Na secao 5 encontra-se a conclusao do estudo e ideias para trabalhos futuros. <br><br><b>Sistemas de recomendacoes</b><br><br>Um sistema de recomendacoes tem como objetivo recomendar a usuarios <br>produtos que o agradem. Para isso, o sistema de recomedacoes se baseia <br>inicialmente em respostas ja conhecidas de outros usuarios e alguma <br>informacao sobre o usuario que deseja obter uma recomendacao. <br>O conjunto de informacao inicial que o sistema de recomendacoes ja <br>possui e utilizado para comparar com a informacao obtida do usuario <br>em questao para tentar deduzir quais outros produtos interessam <br>ao usuario. <br><br><b>Competitive Recommendation Systems</b><br><br><i>Introducao</i><br><br>A ideia basica desta abordagem e reduzir o problema de sistema de recomendacoes <br>no problema de reconstrucao de matrizes a partir de informacoes parciais da mesma. <br>Foram utilizadas estrategias de reconstrucao de matrizes <br>baseadas na tecnica de SVD, encontrando boas aproximacoes <br>para a matriz original <br><br><i>Divisao em tipos</i><br>Assume-se que os usuarios podem ser divididos em grupos com interesses semelhantes, <br>classificando-os em tipos. <br>Consideraremos que math_mode: kseja o numero de tipos, onde math_mode: ke <br>uma constante que nao depende do numero de usuarios. <br><br><i>Qualidade dos algoritmos</i><br><br>Um bom algoritmo de recomendacoes deve dar boas recomendacoes utilizando o minimo de <br>informacao possivel. Sao estabelecidas 2 metricas para medir a qualidade de um algoritmo <br>de recomendacoes. <br><br>Um algoritmo e math_mode: c-competitivomath_mode: paramath_mode: amostragemse usa somente math_mode: ck<br>linhas e colunas da matriz para recomendar mais produtos. <br><br>Um algoritmo e math_mode: f-competitivomath_mode: paramath_mode: utilidade<br>se faz boas recomendacoes a math_mode: fmusuarios, onde math_mode: me o numero de usuarios. <br><br><i>Notacao</i><br><br>Nesta secao, a seguinte notacao sera utilizada: <br><br><i>Reconstrucao de matrizes</i><br><br><i>Escolha das linhas</i><br><br>A escolha de um numero constante de linhas segue a ideia de que sao necessarios <br>alguns usuarios respondendo um questionario sobre todos os produtos para que os <br>outros usuarios sejam classificados a partir das respostas destes. Na pratica, empresas <br>pagam pessoas para o preenchimento desses formularios. <br><br>Portanto a partir da escolha das math_mode: aklinhas, podemos formar uma matriz math_mode: Vde tipos efetivos. <br><br><i>Escolha das colunas</i><br><br>A ideia de escolher um numero constante de colunas acontece pois todo usuario <br>que deseja obter uma recomendacao deve responder inicialmente um pequeno <br>questionario, dando alguma informacao sua para que o algoritmo de recomendacao <br><b>Ideia da prova</b><br><br>Primeiramente separa-se os casos em que o usuario faz parte do comite e quando <br>o usuario nao faz <br>Para o caso em que o usuario faz parte do comite, ele tera que fazer math_mode: Kprovas. <br>Para o caso em que o usuario nao esta no comite, e calculada a esperanca do numero <br>de provas que ele tera que fazer. Como a ordem dos produtos <br>recomendados e aleatoria, o numero de provas que um usuario tera que fazer <br>e uma variavel aleatoria geometrica. Logo, basta fazer a analise da esperanca <br>para essa variavel aleatoria <CITE>[2]</CITE>. <br>O resultado do teorema aparece com a esperanca do numero de provas para <br>cada caso. <br><br><i>Comite</i><br><br>A tecnica de criar um comite do algoritmo proposto possui serias <br>desvantagens. <br>A primeira delas e que a complexidade de recomendacao individual <br>e e, ja que os usuarios do comite tem que provar todos os <br>algoritmos. <br>Um segundo ponto contra esta tecnica e a existencia de usuarios desonestos, <br>que, quando escolhidos para o comite, atrapalham o funcionamento do <br>algoritmo de recomendacoes <CITE>[1]    </CITE>. <br><br><b>Conclusao e trabalhos futuros</b><br><br>Atraves destalgoritmose estudo, verificou-se a existencia de solucoes com abordagens <br>totalmente diferentes para o problema de sistemas de recomendacoes. Mas o mais <br>importante foi o aprendizado das tecnicas mais gerais para resolucao de problemas <br>como por exemplo SVD. <br>Potenciais trabalhos futuros sao a implementacao e comparacao dos algoritmos na pratica <br>ou alteracao neles para que ao inves de dispor de informacoes de colunas inteiras, os <br>algoritmos funcionem com posicoes esparsas na matriz. <br><br>[Boney96] - Boney, L., Tewfik, A.H., and Hamdy, K.N., Digital <br>
-  <br>
-  Watermarks for Audio Signals, Proceedings of the Third IEEE <br>
-  International Conference on Multimedia, pp. 473-480, June 1996. <br>
- [MG] - Goossens, M., Mittelbach, F., Samarin, A LaTeX Companion, Addison-Wesley, Reading, MA, 1994. <br>
- [HK] - Kopka, H., Daly P.W., A Guide to LaTeX, Addison-Wesley, Reading, MA, 1999. <br>
- [Pan] - Pan, D., A Tutorial on MPEG/Audio Compression, IEEE Multimedia, Vol.2, pp.60-74, Summer 1998. <br>
- <br><br><br>
+<p align="justify"><br>
+<p align="justify"><head><title>Sistemas de recomendacoes</title></head><h1>Sistemas de recomendacoes</h1>
+<p align="justify"><br>
+<p align="justify"><br>
+<p align="justify"><br>
+<p align="justify"><b>Introducao</b><br>
+<p align="justify"><br>
+<p align="justify">O objetivo deste relatorio e descrever os assuntos estudados durante a <br>
+<p align="justify">disciplina de MC032 no segundo semestre de 2010. O principal interesse <br>
+<p align="justify">deste trabalho foi pesquisar na literatura sobre <br>
+<p align="justify">o problema de sistemas de recomendacoes e diferentes abordagens para resolve-lo. <br>
+<p align="justify">Na secao 2 e descrito em linhas gerais o que e um sistema de recomendacoes. <br>
+<p align="justify">Nas secoes 3 e 4 sao mostradas as <br>
+<p align="justify">principais ideias encontradas nos trabalhos , <br>
+<p align="justify">respectivamente. <br>
+<p align="justify">Na secao 5 encontra-se a conclusao do estudo e ideias para trabalhos futuros. <br>
+<p align="justify"><br>
+<p align="justify"><b>Sistemas de recomendacoes</b><br>
+<p align="justify"><br>
+<p align="justify">Um sistema de recomendacoes tem como objetivo recomendar a usuarios <br>
+<p align="justify">produtos que o agradem. Para isso, o sistema de recomedacoes se baseia <br>
+<p align="justify">inicialmente em respostas ja conhecidas de outros usuarios e alguma <br>
+<p align="justify">informacao sobre o usuario que deseja obter uma recomendacao. <br>
+<p align="justify">O conjunto de informacao inicial que o sistema de recomendacoes ja <br>
+<p align="justify">possui e utilizado para comparar com a informacao obtida do usuario <br>
+<p align="justify">em questao para tentar deduzir quais outros produtos interessam <br>
+<p align="justify">ao usuario. <br>
+<p align="justify"><br>
+<p align="justify"><b>Competitive Recommendation Systems</b><br>
+<p align="justify"><br>
+<p align="justify"><i>Introducao</i><br>
+<p align="justify"><br>
+<p align="justify">A ideia basica desta abordagem e reduzir o problema de sistema de recomendacoes <br>
+<p align="justify">no problema de reconstrucao de matrizes a partir de informacoes parciais da mesma. <br>
+<p align="justify">Foram utilizadas estrategias de reconstrucao de matrizes <br>
+<p align="justify">baseadas na tecnica de SVD, encontrando boas aproximacoes <br>
+<p align="justify">para a matriz original <br>
+<p align="justify"><br>
+<p align="justify"><i>Divisao em tipos</i><br>
+<p align="justify">Assume-se que os usuarios podem ser divididos em grupos com interesses semelhantes, <br>
+<p align="justify">classificando-os em tipos. <br>
+<p align="justify">Consideraremos que $k$ seja o numero de tipos, onde $k$ e <br>
+<p align="justify">uma constante que nao depende do numero de usuarios. <br>
+<p align="justify"><br>
+<p align="justify"><i>Qualidade dos algoritmos</i><br>
+<p align="justify"><br>
+<p align="justify">Um bom algoritmo de recomendacoes deve dar boas recomendacoes utilizando o minimo de <br>
+<p align="justify">informacao possivel. Sao estabelecidas 2 metricas para medir a qualidade de um algoritmo <br>
+<p align="justify">de recomendacoes. <br>
+<p align="justify"><br>
+<p align="justify">Um algoritmo e $c-competitivo$ $para$ $amostragem$ se usa somente $ck$ <br>
+<p align="justify">linhas e colunas da matriz para recomendar mais produtos. <br>
+<p align="justify"><br>
+<p align="justify">Um algoritmo e $f-competitivo$ $para$ $utilidade$ <br>
+<p align="justify">se faz boas recomendacoes a $fm$ usuarios, onde $m$ e o numero de usuarios. <br>
+<p align="justify"><br>
+<p align="justify"><i>Notacao</i><br>
+<p align="justify"><br>
+<p align="justify">Nesta secao, a seguinte notacao sera utilizada: <br>
+<p align="justify"><br>
+<p align="justify"><ul><br>
+<p align="justify"><li> [A] matriz de recomendacao original <br>
+<p align="justify"></li>
+<p align="justify"><li> [Aij] valor da utilidade do produto j para o usuario i <br>
+<p align="justify"></li>
+<p align="justify"><li> [A(i)] i-esima linha da matriz A, que corresponde ao <br>
+<p align="justify"> vetor de utilidades do i-esimo usuario. <br>
+<p align="justify"></li>
+<p align="justify"><li> [A(i)] i-esima coluna a matriz A, que corresponde a <br>
+<p align="justify"> utilidade de um produto para todos os usuarios. <br>
+<p align="justify"></li>
+<p align="justify"><li> [Ak] Melhor aproximacao com posto k de A, obtida atraves da tecnica de SVD. <br>
+<p align="justify"></li>
+<p align="justify"><li> [air] valor da utilidade do r-esimo produto com maior utilidade <br>
+<p align="justify"> para o usuario i <br>
+<p align="justify"></li></ul><br>
+<p align="justify"><br>
+<p align="justify"><i>Reconstrucao de matrizes</i><br>
+<p align="justify"><br>
+<p align="justify"><i>Escolha das linhas</i><br>
+<p align="justify"><br>
+<p align="justify">A escolha de um numero constante de linhas segue a ideia de que sao necessarios <br>
+<p align="justify">alguns usuarios respondendo um questionario sobre todos os produtos para que os <br>
+<p align="justify">outros usuarios sejam classificados a partir das respostas destes. Na pratica, empresas <br>
+<p align="justify">pagam pessoas para o preenchimento desses formularios. <br>
+<p align="justify"><br>
+<p align="justify">Portanto a partir da escolha das $ak$ linhas, podemos formar uma matriz $V$ de tipos efetivos. <br>
+<p align="justify"><br>
+<p align="justify"><i>Escolha das colunas</i><br>
+<p align="justify"><br>
+<p align="justify">A ideia de escolher um numero constante de colunas acontece pois todo usuario <br>
+<p align="justify">que deseja obter uma recomendacao deve responder inicialmente um pequeno <br>
+<p align="justify">questionario, dando alguma informacao sua para que o algoritmo de recomendacao <br>
+<p align="justify"><b>Ideia da prova</b><br>
+<p align="justify"><br>
+<p align="justify">Primeiramente separa-se os casos em que o usuario faz parte do comite e quando <br>
+<p align="justify">o usuario nao faz <br>
+<p align="justify">Para o caso em que o usuario faz parte do comite, ele tera que fazer $K$ provas. <br>
+<p align="justify">Para o caso em que o usuario nao esta no comite, e calculada a esperanca do numero <br>
+<p align="justify">de provas que ele tera que fazer. Como a ordem dos produtos <br>
+<p align="justify">recomendados e aleatoria, o numero de provas que um usuario tera que fazer <br>
+<p align="justify">e uma variavel aleatoria geometrica. Logo, basta fazer a analise da esperanca <br>
+<p align="justify">para essa variavel aleatoria <CITE>[2]</CITE>. <br>
+<p align="justify">O resultado do teorema aparece com a esperanca do numero de provas para <br>
+<p align="justify">cada caso. <br>
+<p align="justify"><br>
+<p align="justify"><i>Comite</i><br>
+<p align="justify">A tecnica de criar um comite do algoritmo proposto possui serias <br>
+<p align="justify">desvantagens. <br>
+<p align="justify">A primeira delas e que a complexidade de recomendacao individual <br>
+<p align="justify">e $\Omega(n)$ , ja que os usuarios do comite tem que provar todos os <br>
+<p align="justify">algoritmos. <br>
+<p align="justify">Um segundo ponto contra esta tecnica e a existencia de usuarios desonestos, <br>
+<p align="justify">que, quando escolhidos para o comite, atrapalham o funcionamento do <br>
+<p align="justify">algoritmo de recomendacoes <CITE>[1]    </CITE>. <br>
+<p align="justify"><br>
+<p align="justify"><b>Conclusao e trabalhos futuros</b><br>
+<p align="justify"><br>
+<p align="justify">Atraves deste estudo, verificou-se a existencia de solucoes com abordagens <br>
+<p align="justify">totalmente diferentes para o problema de sistemas de recomendacoes. Mas o mais <br>
+<p align="justify">importante foi o aprendizado das tecnicas mais gerais para resolucao de problemas <br>
+<p align="justify">como por exemplo SVD. <br>
+<p align="justify">Potenciais trabalhos futuros sao a implementacao e comparacao dos algoritmos na pratica <br>
+<p align="justify">ou alteracao neles para que ao inves de dispor de informacoes de colunas inteiras, os <br>
+<p align="justify">algoritmos funcionem com posicoes esparsas na matriz. <br>
+<p align="justify"><br>
+<p align="justify"><br>
+<p align="justify">[1]{Boney96} - Boney, L., Tewfik, A.H., and Hamdy, K.N., Digital <br>
+<p align="justify"> Watermarks for Audio Signals, Proceedings of the Third IEEE <br>
+<p align="justify"> International Conference on Multimedia, pp. 473-480, June 1996. <br>
+<p align="justify">[2]{MG} - Goossens, M., Mittelbach, F., Samarin, A LaTeX Companion, Addison-Wesley, Reading, MA, 1994. <br>
+<p align="justify">[3]{HK} - Kopka, H., Daly P.W., A Guide to LaTeX, Addison-Wesley, Reading, MA, 1999. <br>
+<p align="justify">[4]{Pan} - Pan, D., A Tutorial on MPEG/Audio Compression, IEEE Multimedia, Vol.2, pp.60-74, Summer 1998. <br>
+<br>
+<br>
+<br>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}});</script>
+<head><title>Sistemas de recomendacoes</title></head><h1>Sistemas de recomendacoes</h1>
+<br>
+<br>
+<br>
+<b>Introducao</b><br>
+<br>
+O objetivo deste relatorio e descrever os assuntos estudados durante a <br>
+disciplina de MC032 no segundo semestre de 2010. O principal interesse <br>
+deste trabalho foi pesquisar na literatura sobre <br>
+o problema de sistemas de recomendacoes e diferentes abordagens para resolve-lo. <br>
+Na secao 2 e descrito em linhas gerais o que e um sistema de recomendacoes. <br>
+Nas secoes 3 e 4 sao mostradas as <br>
+principais ideias encontradas nos trabalhos , <br>
+respectivamente. <br>
+Na secao 5 encontra-se a conclusao do estudo e ideias para trabalhos futuros. <br>
+<br>
+<b>Sistemas de recomendacoes</b><br>
+<br>
+Um sistema de recomendacoes tem como objetivo recomendar a usuarios <br>
+produtos que o agradem. Para isso, o sistema de recomedacoes se baseia <br>
+inicialmente em respostas ja conhecidas de outros usuarios e alguma <br>
+informacao sobre o usuario que deseja obter uma recomendacao. <br>
+O conjunto de informacao inicial que o sistema de recomendacoes ja <br>
+possui e utilizado para comparar com a informacao obtida do usuario <br>
+em questao para tentar deduzir quais outros produtos interessam <br>
+ao usuario. <br>
+<br>
+<b>Competitive Recommendation Systems</b><br>
+<br>
+<i>Introducao</i><br>
+<br>
+A ideia basica desta abordagem e reduzir o problema de sistema de recomendacoes <br>
+no problema de reconstrucao de matrizes a partir de informacoes parciais da mesma. <br>
+Foram utilizadas estrategias de reconstrucao de matrizes <br>
+baseadas na tecnica de SVD, encontrando boas aproximacoes <br>
+para a matriz original <br>
+<br>
+<i>Divisao em tipos</i><br>
+Assume-se que os usuarios podem ser divididos em grupos com interesses semelhantes, <br>
+classificando-os em tipos. <br>
+Consideraremos que $k$ seja o numero de tipos, onde $k$ e <br>
+uma constante que nao depende do numero de usuarios. <br>
+<br>
+<i>Qualidade dos algoritmos</i><br>
+<br>
+Um bom algoritmo de recomendacoes deve dar boas recomendacoes utilizando o minimo de <br>
+informacao possivel. Sao estabelecidas 2 metricas para medir a qualidade de um algoritmo <br>
+de recomendacoes. <br>
+<br>
+Um algoritmo e $c-competitivo$ $para$ $amostragem$ se usa somente $ck$ <br>
+linhas e colunas da matriz para recomendar mais produtos. <br>
+<br>
+Um algoritmo e $f-competitivo$ $para$ $utilidade$ <br>
+se faz boas recomendacoes a $fm$ usuarios, onde $m$ e o numero de usuarios. <br>
+<br>
+<i>Notacao</i><br>
+<br>
+Nesta secao, a seguinte notacao sera utilizada: <br>
+<br>
+<ul><br>
+<li> [A] matriz de recomendacao original <br>
+</li>
+<li> [Aij] valor da utilidade do produto j para o usuario i <br>
+</li>
+<li> [A(i)] i-esima linha da matriz A, que corresponde ao <br>
+ vetor de utilidades do i-esimo usuario. <br>
+</li>
+<li> [A(i)] i-esima coluna a matriz A, que corresponde a <br>
+ utilidade de um produto para todos os usuarios. <br>
+</li>
+<li> [Ak] Melhor aproximacao com posto k de A, obtida atraves da tecnica de SVD. <br>
+</li>
+<li> [air] valor da utilidade do r-esimo produto com maior utilidade <br>
+ para o usuario i <br>
+</li></ul><br>
+<br>
+<i>Reconstrucao de matrizes</i><br>
+<br>
+<i>Escolha das linhas</i><br>
+<br>
+A escolha de um numero constante de linhas segue a ideia de que sao necessarios <br>
+alguns usuarios respondendo um questionario sobre todos os produtos para que os <br>
+outros usuarios sejam classificados a partir das respostas destes. Na pratica, empresas <br>
+pagam pessoas para o preenchimento desses formularios. <br>
+<br>
+Portanto a partir da escolha das $ak$ linhas, podemos formar uma matriz $V$ de tipos efetivos. <br>
+<br>
+<i>Escolha das colunas</i><br>
+<br>
+A ideia de escolher um numero constante de colunas acontece pois todo usuario <br>
+que deseja obter uma recomendacao deve responder inicialmente um pequeno <br>
+questionario, dando alguma informacao sua para que o algoritmo de recomendacao <br>
+<b>Ideia da prova</b><br>
+<br>
+Primeiramente separa-se os casos em que o usuario faz parte do comite e quando <br>
+o usuario nao faz <br>
+Para o caso em que o usuario faz parte do comite, ele tera que fazer $K$ provas. <br>
+Para o caso em que o usuario nao esta no comite, e calculada a esperanca do numero <br>
+de provas que ele tera que fazer. Como a ordem dos produtos <br>
+recomendados e aleatoria, o numero de provas que um usuario tera que fazer <br>
+e uma variavel aleatoria geometrica. Logo, basta fazer a analise da esperanca <br>
+para essa variavel aleatoria <CITE>[2]</CITE>. <br>
+O resultado do teorema aparece com a esperanca do numero de provas para <br>
+cada caso. <br>
+<br>
+<i>Comite</i><br>
+A tecnica de criar um comite do algoritmo proposto possui serias <br>
+desvantagens. <br>
+A primeira delas e que a complexidade de recomendacao individual <br>
+e $\Omega(n)$ , ja que os usuarios do comite tem que provar todos os <br>
+algoritmos. <br>
+Um segundo ponto contra esta tecnica e a existencia de usuarios desonestos, <br>
+que, quando escolhidos para o comite, atrapalham o funcionamento do <br>
+algoritmo de recomendacoes <CITE>[1]    </CITE>. <br>
+<br>
+<b>Conclusao e trabalhos futuros</b><br>
+<br>
+Atraves deste estudo, verificou-se a existencia de solucoes com abordagens <br>
+totalmente diferentes para o problema de sistemas de recomendacoes. Mas o mais <br>
+importante foi o aprendizado das tecnicas mais gerais para resolucao de problemas <br>
+como por exemplo SVD. <br>
+Potenciais trabalhos futuros sao a implementacao e comparacao dos algoritmos na pratica <br>
+ou alteracao neles para que ao inves de dispor de informacoes de colunas inteiras, os <br>
+algoritmos funcionem com posicoes esparsas na matriz. <br>
+<br>
+<br>
+[1]{Boney96} - Boney, L., Tewfik, A.H., and Hamdy, K.N., Digital <br>
+ Watermarks for Audio Signals, Proceedings of the Third IEEE <br>
+ International Conference on Multimedia, pp. 473-480, June 1996. <br>
+[2]{MG} - Goossens, M., Mittelbach, F., Samarin, A LaTeX Companion, Addison-Wesley, Reading, MA, 1994. <br>
+[3]{HK} - Kopka, H., Daly P.W., A Guide to LaTeX, Addison-Wesley, Reading, MA, 1999. <br>
+[4]{Pan} - Pan, D., A Tutorial on MPEG/Audio Compression, IEEE Multimedia, Vol.2, pp.60-74, Summer 1998. <br>
+<br>
+<br>
+<br>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}});</script>
+    <script t<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+ <b>
