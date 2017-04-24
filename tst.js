@@ -1,1 +1,3 @@
-<script src="https://securepubads.g.doubleclick.net/">Teste123</script>
+<script>
+document.getElementById("demo").innerHTML = "Hello JavaScript!";
+</script> 
