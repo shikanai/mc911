@@ -1,3 +1,3 @@
 <script>
-document.getElementById("demo").innerHTML = "Hello JavaScript!!!!";
+alert("1234");
 </script> 
