@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:output method="html" version="5.0" omit-xml-declaration="yes" indent="no"/> 
+<xsl:key name="itemsByGroup" match="root/item" use="group" />
+<xsl:strip-space elements="item price" />
+
+<xsl:template match="/">	
+<style>
+.item_table { font-size: 13px; font-family: Arial; border-collapse: collapse; width: 98%; margin-right: auto; }
+.item_table th { border: 1px solid grey; padding: 4px; background-color:#e9e9e9; font-weight: bold; }
+.item_table td { border: 1px solid grey; padding: 4px; }
+.trH25 {padding: 5px 0 5px 0; height: 25px;}
+.trH35 {padding: 5px 0 5px 0; height: 35px;}
+.mainOptionsRow {padding: 5px 0 5px 0; height: 32px;}
+.subHeading {font-size: 16px; color: #a0a0a0;}
+.group_box { -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; border: 1px solid #ccc; padding: 0px; width: 99%; }
+.group_box_title { -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; /*border: 1px solid #ccc;*/ background-color: #e9e9e9; position: relative; top: 0; padding: 0px; left: 0; width:100%; height: 40px; }
+.group_box_title_open { -webkit-border-radius: 10px 10px 0px 0px; -moz-border-radius: 10px 10px 0px 0px; border-radius: 10px 10px 0px 0px; /*border: 1px solid #ccc;*/ background-color: #e9e9e9; position: relative; top: 0; padding: 0px; left: 0; width:100%; height: 40px; }		
+</style>
+
+<div id="mainDiv" style="width: 100%">
+	<button id="createProposalBut" class="button dismiss" style="height: 29px;">
+	<xsl:attribute name="onclick">
+	<![CDATA[
+
+window['finalPropId'] = '426';
+window['fieldTabId'] = '6351';
+window['proposalData'] = '476';
+window['firstPay'] = '477';
+window['proposalEmail'] = '478';
+window['monthlyMaintenance'] = '479';
+window['proposalMailData'] = '707';
+window['placeHolderId'] = '301';
+
+// adjust screen
+var elms = document.getElementsByClassName('cl-fld-title');
+for (var i = 0; i < elms.length; i++) { elms[i].parentNode.removeChild(elms[i]); }
+var els = document.getElementsByClassName('form-item');
+for (var i = 0; i < els.length; i++) {
+	if (els[i].type == 'select-one' && els[i].name == placeHolderId) {
+		if (els[i].parentNode.parentNode.parentNode != null) els[i].parentNode.parentNode.parentNode.style.display = 'none';
+		else els[i].parentNode.parentNode.style.display = 'none';
+		break;
+	}
+}
+if (document.getElementById('mainDiv').parentNode.parentNode != null) document.getElementById('mainDiv').parentNode.parentNode.style.width='100%';
+else document.getElementById('mainDiv').parentNode.style.width='100%';
+
+window['aggOptions'] = []]>
+<xsl:for-each select="root/item[@type='AGO']">
+	<![CDATA[ {product: ']]><xsl:value-of select="group"/><![CDATA[', 
+		id: ']]><xsl:value-of select="item"/><![CDATA[', 
+		text: ']]><xsl:value-of select="name"/><![CDATA['.substring(0, ']]><xsl:value-of select="name"/><![CDATA['.indexOf(';')), 
+		tag: ']]><xsl:value-of select="name"/><![CDATA['.substring(']]><xsl:value-of select="name"/><![CDATA['.indexOf(';') + 1),
+		editor: ']]><xsl:value-of select="normalize-space(price)"/><![CDATA[',
+		rules: []
+		}, ]]>
+</xsl:for-each><![CDATA[];
+
+window['aggOptionsRules'] = []]>
+<xsl:for-each select="root/item[@type='AGOF']">
+	<![CDATA[ {id: ']]><xsl:value-of select="group"/><![CDATA['.substring(0, ']]><xsl:value-of select="group"/><![CDATA['.indexOf('-')), 
+		answer: ']]><xsl:value-of select="group"/><![CDATA['.substring(']]><xsl:value-of select="group"/><![CDATA['.indexOf('-')+1), 
+		text: ']]><xsl:value-of select="item"/><![CDATA['.substring(0, ']]><xsl:value-of select="item"/><![CDATA['.indexOf(';')), 
+		tag: ']]><xsl:value-of select="item"/><![CDATA['.substring(']]><xsl:value-of select="item"/><![CDATA['.indexOf(';')+1),
+		editor: ']]><xsl:value-of select="name"/><![CDATA[',
+		values: ']]><xsl:value-of select="normalize-space(price)"/><![CDATA['}, ]]>
+</xsl:for-each><![CDATA[];
+
+window['alarmTypes'] = [
+]]><xsl:for-each select="root/item[@type='AT']"><![CDATA[
+	{name: ']]><xsl:value-of select="group"/><![CDATA[', id: ]]><xsl:value-of select="price"/><![CDATA[, type: 'alarmType',
+	 rules: ((']]><xsl:value-of select="normalize-space(item)"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="normalize-space(item)"/><![CDATA['.split(';') : [']]><xsl:value-of select="normalize-space(item)"/><![CDATA[']), 
+	 excludeItems: []
+	},
+]]></xsl:for-each><![CDATA[];
+
+window['projectTypes'] = [
+]]><xsl:for-each select="root/item[@type='PT']"><![CDATA[
+	{name: ']]><xsl:value-of select="item"/><![CDATA[', id: ]]><xsl:value-of select="group"/><![CDATA[, type: 'projectType',
+	allowedGroups: ((']]><xsl:value-of select="normalize-space(name)"/><![CDATA['.indexOf(',') != -1) ? ']]><xsl:value-of select="normalize-space(name)"/><![CDATA['.split(',') : [']]><xsl:value-of select="normalize-space(name)"/><![CDATA[']), 
+	rules: [], excludeItems: []},
+]]></xsl:for-each><![CDATA[];
+
+]]><xsl:for-each select="root/item[@type='PTR']"><![CDATA[
+projectTypes[]]><xsl:value-of select="group"/><![CDATA[].rules.push(']]><xsl:value-of select="item"/><![CDATA[');
+]]></xsl:for-each><![CDATA[
+
+window['exclusionRules'] = [
+]]><xsl:for-each select="root/item[@type='ER']"><![CDATA[
+	{ type: ']]><xsl:value-of select="group"/><![CDATA[',
+	  applicableTo: ((']]><xsl:value-of select="item"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="item"/><![CDATA['.split(';') : [']]><xsl:value-of select="item"/><![CDATA[']),
+	  excludeItems: ((']]><xsl:value-of select="normalize-space(name)"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="normalize-space(name)"/><![CDATA['.split(';') : [']]><xsl:value-of select="normalize-space(name)"/><![CDATA[']) },
+]]></xsl:for-each><![CDATA[];
+
+window['quantityAggValues'] = [
+]]><xsl:for-each select="root/item[@type='QPR']"><![CDATA[
+	{item: ']]><xsl:value-of select="group"/><![CDATA[', quantity: ]]><xsl:value-of select="item"/><![CDATA[},
+]]></xsl:for-each><![CDATA[];
+
+window['quantityAggRules'] = [
+]]><xsl:for-each select="root/item[@type='QMV']"><![CDATA[
+	{aggregators: ((']]><xsl:value-of select="group"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="group"/><![CDATA['.split(';') : [']]><xsl:value-of select="group"/><![CDATA[']),
+	max: ]]><xsl:value-of select="item"/><![CDATA[, maxVals: [],
+	applicableTo: ((']]><xsl:value-of select="name"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="name"/><![CDATA['.split(';') : [']]><xsl:value-of select="name"/><![CDATA['])},
+]]></xsl:for-each><![CDATA[];
+
+window['items'] = [
+]]><xsl:for-each select="root/item[@type='PR'][generate-id() = generate-id(key('itemsByGroup', group)[1])]"><![CDATA[ 
+	{group: ']]><xsl:value-of select="group"/><![CDATA['.trim(),
+	code: ']]><xsl:value-of select="group"/><![CDATA['.substring(0, ']]><xsl:value-of select="group"/><![CDATA['.indexOf('-')).trim(),
+	products: [ ]]><xsl:for-each select="key('itemsByGroup', group)"><![CDATA[
+		{ name: ']]><xsl:value-of select="name"/><![CDATA[', type: 'product',
+		  groupCode: ']]><xsl:value-of select="group"/><![CDATA['.substring(0, ']]><xsl:value-of select="group"/><![CDATA['.indexOf('-')).trim(),
+		  salePrice: parseFloat(']]><xsl:value-of select="normalize-space(price)"/><![CDATA['.split(';')[0].replace(',', '')), 
+		  rentalPrice: parseFloat(']]><xsl:value-of select="normalize-space(price)"/><![CDATA['.split(';')[1].replace(',', '')), 
+		  installPrice: parseFloat(']]><xsl:value-of select="normalize-space(price)"/><![CDATA['.split(';')[2].replace(',', '')),
+		  itemId: ((']]><xsl:value-of select="item"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="item"/><![CDATA['.split(';')[0] : ']]><xsl:value-of select="item"/><![CDATA[').trim(),
+		  rules: ((']]><xsl:value-of select="item"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="item"/><![CDATA['.split(';').slice(1) : []),
+		  excludeItems: [],
+		  unitPrice: function (mode) { return (mode == 0) ? this.salePrice : this.rentalPrice; },
+		},]]></xsl:for-each><![CDATA[
+	]},
+]]></xsl:for-each><![CDATA[];
+
+window['services'] = [
+]]><xsl:for-each select="root/item[@type='SR']"><![CDATA[
+	{ name: ']]><xsl:value-of select="item"/><![CDATA[', type: 'service',
+	  serviceId: ((']]><xsl:value-of select="group"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="group"/><![CDATA['.split(';')[0] : ']]><xsl:value-of select="group"/><![CDATA[').trim(),
+	  rules: ((']]><xsl:value-of select="group"/><![CDATA['.indexOf(';') != -1) ? ']]><xsl:value-of select="group"/><![CDATA['.split(';').slice(1) : []),
+	  price: ]]><xsl:value-of select="normalize-space(name)"/><![CDATA[, occur: ']]><xsl:value-of select="normalize-space(price)"/><![CDATA[',
+	  excludeItems: [],
+	},
+]]></xsl:for-each><![CDATA[];
+
+window['arrayContains'] = function (arr, el) {
+	for (var i = 0; i < arr.length; i++) { if (arr[i] == el) return true; }
+	return false;
+}
+// prepare objects for easier coding
+for (var i = 0; i < alarmTypes.length; i++) {
+	for (var j = 0; j < exclusionRules.length; j++) {
+		if (exclusionRules[j].type == 'AT' && arrayContains(exclusionRules[j].applicableTo, alarmTypes[i].id))
+			alarmTypes[i].excludeItems =  alarmTypes[i].excludeItems.concat(exclusionRules[j].excludeItems);
+	}
+}
+for (var i = 0; i < projectTypes.length; i++) {
+	for (var j = 0; j < exclusionRules.length; j++) {
+		if (exclusionRules[j].type == 'PT' && arrayContains(exclusionRules[j].applicableTo, projectTypes[i].id))
+			projectTypes[i].excludeItems =  projectTypes[i].excludeItems.concat(exclusionRules[j].excludeItems);
+	}
+}
+for (var i = 0; i < items.length; i++) {
+	for (var j = 0; j < items[i].products.length; j++) {
+		for (var k = 0; k < exclusionRules.length; k++) {
+			if (exclusionRules[k].type == 'PR' && arrayContains(exclusionRules[k].applicableTo, items[i].products[j].itemId))
+				items[i].products[j].excludeItems =  items[i].products[j].excludeItems.concat(exclusionRules[k].excludeItems);
+		}
+	}
+}
+for (var i = 0; i < aggOptions.length; i++) {
+	for (var j = 0; j < aggOptionsRules.length; j++) { if (aggOptionsRules[j].id == aggOptions[i].id) aggOptions[i].rules.push(aggOptionsRules[j]); }
+}
+for (var i = 0; i < quantityAggRules.length; i++) {
+	for (var j = 0; j < quantityAggRules[i].aggregators.length; j++) {
+		for (var k = 0; k < quantityAggValues.length; k++) {
+			if (quantityAggValues[k].item == quantityAggRules[i].aggregators[j]) {
+				quantityAggRules[i].maxVals.push(quantityAggValues[k].quantity);
+				break;
+			}
+		}
+	}
+}
+console.log(aggOptions);
+console.log(quantityAggRules);
+console.log(exclusionRules);
+console.log(alarmTypes);
+console.log(projectTypes);
+
+if (window['recalculateTotals'] == undefined) {	
+	
+	if (document.getElementById('codeBudgetCont') != null) {
+		var cont = document.getElementById('codeBudgetCont').innerHTML;
+		cont = cont.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\'');
+		eval(cont.replace(/&amp;/g, '&'));
+	}
+	window['getElement'] = function (id) { return document.getElementById(id); }
+	window['recalculateTotals'] = function () {
+		console.log('recalculateTotals()');
+		var mode = budgetValues.mode;
+		
+		getElement('modality').innerHTML = (mode == 0) ? 'Venda' : 'Comodato';
+		getElement('monthlyDesc').innerHTML = (mode == 0) ? '(Serviços)' : '(Serviços + Comodato)';
+		if (mode == 1) {
+			rmvTr('totalsTable', 'equipmentInstallmentTR');
+			budgetValues.installments.products = 1;
+		} else if (getElement('equipmentInstallmentTR') == null) { // add TR
+			var row = getElement('totalsTable').insertRow(6);
+			row.id = 'equipmentInstallmentTR';
+			row.insertCell(0).innerHTML = 'Equipamentos: ';
+			row.insertCell(1).innerHTML = '<select class=\'form-item\' style=\'min-width: 40px; max-width: 80px;\' id=\'paymentItemParcels\' onchange=\'handleInstallments();\'>' + getQuantityOptions(1, 10, false) + '</select>';
+			row.insertCell(2).innerHTML = '<span style=\'padding-left: 10px;\' id=\'totalParcelItemValue\'>$0.00</span>';
+		}
+		var totalItems = 0, totalInstalls = 0, totalServices = 0;
+
+		// totals
+		for (var i = 0; i < budgetValues.products.length; i++) {
+			budgetValues.products[i].tPrice = 
+				(budgetValues.products[i].item.unitPrice(mode) * budgetValues.products[i].qty) +
+				(budgetValues.products[i].item.installPrice * budgetValues.products[i].qty);
+			if (getElement('qty' + budgetValues.products[i].id) != null) getElement('qty' + budgetValues.products[i].id).value = budgetValues.products[i].qty;
+			getElement('up' + budgetValues.products[i].id).innerHTML = '$' + budgetValues.products[i].item.unitPrice(mode).toFixed(2);
+			getElement('tp' + budgetValues.products[i].id).innerHTML = (mode == 0) ? '$' + budgetValues.products[i].tPrice.toFixed(2) : '-'; // only show if mode = 'Venda'
+			
+			totalItems += parseFloat(parseFloat(budgetValues.products[i].item.unitPrice(mode)) * parseFloat(budgetValues.products[i].qty));
+			totalInstalls += parseFloat(parseFloat(budgetValues.products[i].item.installPrice) * parseFloat(budgetValues.products[i].qty));
+		}
+		for (var i = 0; i < budgetValues.services.length; i++) {
+			budgetValues.services[i].tPrice = (budgetValues.services[i].service.price * budgetValues.services[i].qty);
+			if (getElement('qty' + budgetValues.services[i].id) != null) getElement('qty' + budgetValues.services[i].id).value = budgetValues.services[i].qty;				
+			getElement('tp' + budgetValues.services[i].id).innerHTML = '$' + budgetValues.services[i].tPrice.toFixed(2);
+			totalServices += parseFloat(parseFloat(budgetValues.services[i].service.price) * parseFloat(budgetValues.services[i].qty));
+		}
+		getElement('totalItems').innerHTML = parseFloat(totalInstalls + totalItems).toFixed(2);
+		getElement('totalServices').innerHTML = totalServices.toFixed(2);
+		budgetValues.totals.item = totalItems;
+		budgetValues.totals.srv = totalServices;
+
+		// determine increases
+		if (budgetValues.cs == 1 && budgetValues.bj == 1) {
+			budgetValues.totals.inst = totalInstalls;
+			getElement('totalsNotes').innerHTML = '';
+		} else {
+			var increase = 0;
+			if (budgetValues.cs == 2) increase += 20;
+
+			if (budgetValues.bj == 2) increase += 5;
+			else if (budgetValues.bj == 3) increase += 20;
+
+			budgetValues.totals.inst = totalInstalls + ((totalInstalls * increase)/100);
+			var text = '* Acréscimo de ' + increase + '% devido a ';
+			if (budgetValues.cs == 2) text += 'Instalação fora de horário comercial';
+			if (budgetValues.bj == 2) text += ((budgetValues.cs == 2) ? ' e ' : '') + 'Grande Obra inferior a 2000m';
+			else if (budgetValues.bj == 3) text += ((budgetValues.cs == 2) ? ' e ' : '') + 'Grande Obra superior a 2000m';
+			getElement('totalsNotes').innerHTML = text;
+		}
+
+		// discounts
+		var serviceDiscount = parseFloat(budgetValues.disc.srv * (budgetValues.totals.srv/100));
+		var installDiscount = parseFloat(budgetValues.disc.inst * (budgetValues.totals.inst/100));
+		var itemDiscount = parseFloat(budgetValues.disc.item * (budgetValues.totals.item/100));
+		getElement('totalItemDiscount').innerHTML = itemDiscount.toFixed(2) + ' ($' + totalItems.toFixed(2) + ')';
+		getElement('totalInstallDiscount').innerHTML = installDiscount.toFixed(2) + ' ($' + budgetValues.totals.inst.toFixed(2) + ')' 
+																	+ ((budgetValues.cs == 1 && budgetValues.bj == 1) ? '' : ' *');
+		getElement('totalServiceDiscount').innerHTML = serviceDiscount.toFixed(2) + ' ($' + totalServices.toFixed(2) + ')';
+		var totalDiscount = parseFloat(itemDiscount + installDiscount + serviceDiscount);
+		getElement('totalDiscount').innerHTML = totalDiscount.toFixed(2);
+		getElement('totalInstall').innerHTML = parseFloat(budgetValues.totals.inst - installDiscount).toFixed(2);
+
+		var grandTotal = parseFloat(budgetValues.totals.item + budgetValues.totals.inst + budgetValues.totals.srv - totalDiscount);
+		getElement('grandTotal').innerHTML = grandTotal.toFixed(2);
+		getElement('totalSale').innerHTML = parseFloat(totalItems - itemDiscount).toFixed(2);
+		getElement('totalService').innerHTML = parseFloat(totalServices - serviceDiscount).toFixed(2);
+		getElement('installMarker').innerHTML = ((budgetValues.cs == 1 && budgetValues.bj == 1) ? '' : ' *');
+		
+		// installments
+		if (mode == 0) getElement('totalParcelItemValue').innerHTML = '$' + parseFloat((budgetValues.totals.item - itemDiscount) / budgetValues.installments.products).toFixed(2) + ' ($' + parseFloat(budgetValues.totals.item - itemDiscount).toFixed(2) + ')';
+		getElement('totalParcelInstallValue').innerHTML = '$' + parseFloat((budgetValues.totals.inst - installDiscount) / budgetValues.installments.install).toFixed(2) 
+																+ ' ($' + parseFloat(budgetValues.totals.inst - installDiscount).toFixed(2) + ')' 
+																+ ((budgetValues.cs == 1 && budgetValues.bj == 1) ? '' : ' *');
+		budgetValues.totalMonthlyPayment = (mode == 0) ? parseFloat(parseFloat((budgetValues.totals.item - itemDiscount) / budgetValues.installments.products) + parseFloat((budgetValues.totals.inst - installDiscount) / budgetValues.installments.install))
+													   : parseFloat((budgetValues.totals.inst - installDiscount) / budgetValues.installments.install);
+		getElement('totalMonthlyPayment').innerHTML = budgetValues.totalMonthlyPayment.toFixed(2);
+		getElement('totalMonthly').innerHTML = (mode == 0) ? parseFloat(budgetValues.totals.srv - serviceDiscount).toFixed(2)
+														   : parseFloat(budgetValues.totals.srv - serviceDiscount + budgetValues.totals.item - itemDiscount).toFixed(2);
+		budgetValues.grandTotal = grandTotal;
+		writeToFinalValue();
+		return false;
+	};
+	window['writeToFinalValue'] = function () {//GB
+		console.log('writing to final value...');
+		console.log(budgetValues);
+		var prodType = '';
+		var nommes = '';
+		var nummes = '';
+                var diaP = '';
+                var anoP = '';
+                var dataP = '';
+                var dataP = new Date();
+                var diaP = dataP.getDate();
+                var anoP = dataP.getFullYear();
+		var nummes = dataP.getMonth();
+		if(nummes == 0) nommes ='janeiro';
+		if(nummes == 1) nommes ='fevereiro';
+		if(nummes == 2) nommes ='março';
+		if(nummes == 3) nommes ='abril';
+		if(nummes == 4) nommes ='maio';
+		if(nummes == 5) nommes ='junho';
+		if(nummes == 6) nommes ='julho';
+		if(nummes == 7) nommes ='agosto';
+		if(nummes == 8) nommes ='setembro';
+		if(nummes == 9) nommes ='outubro';
+		if(nummes == 10) nommes ='novembro';
+		if(nummes == 11) nommes ='dezembro';
+		if(budgetValues.pType == 0) prodType = 'Alarme';
+		if(budgetValues.pType == 1) prodType = 'CFTV';
+		if(budgetValues.pType == 2) prodType = 'Cerca';
+		if(budgetValues.pType == 3) prodType = 'Controle de Acesso';
+		if(budgetValues.pType == 4) prodType = 'Sistema de Incendio';
+		if(budgetValues.pType == 5) prodType = 'Alarme Mais';				
+                var mailData2 = 'São Paulo, ' + diaP + ' de ' + nommes + ' de ' + anoP + '\n';
+	var emailData = 'Modalidade:' + ((budgetValues.mode == 0) ? 'Venda' : 'Comodato') + '\n';
+		emailData += 'Produto: ' + prodType + '\n'; 		emailData += 'Equipamentos\n';
+		var txt = '<modality>' + ((budgetValues.mode == 0) ? 'Venda' : 'Comodato') + '</modality>\n';
+		txt += '<product>' + prodType + '</product>\n';
+		txt += '<equipments>\n';
+		for (var i = 0; i < budgetValues.products.length; i++) {
+			var product = budgetValues.products[i];
+			txt += '<equipment>\n';
+			txt += '<code>' + product.item.itemId + '</code>\n';
+			txt += '<quantity>' + product.qty + '</quantity>\n';
+			txt += '<move>' + product.mov + '</move>\n';
+			txt += '<price>' + product.item.unitPrice(budgetValues.mode) + '</price>\n';
+			txt += '<priceInstall>' + product.item.installPrice + '</priceInstall>\n';
+			txt += '<totalPrice>' + product.tPrice + '</totalPrice>\n';
+			txt += '</equipment>\n';
+			emailData += '\t' + product.qty + ' ' + '\t' +  product.item.name + '\n';
+		}
+		txt += '</equipments>\n';
+		txt += '<services>\n';
+		emailData += 'Serviços\n';
+		for (var i = 0; i < budgetValues.services.length; i++) {
+			var service = budgetValues.services[i];
+			txt += '<service>' + '\n';
+			txt += '<code>' + service.service.serviceId + '</code>' + '\n';
+			txt += '<quantity>' + service.qty + '</quantity>' + '\n';
+			txt += '</service>' + '\n';
+			emailData += '\t' + service.qty + ' ' + '\t' + service.service.serviceId + ' ' + '\t' + service.service.name + '\t' + '\n'; 
+		}
+		txt += '</services>\n';
+		txt += '<discounts>\n';
+		txt += '<product>' + budgetValues.disc.item + '</product>\n';
+		txt += '<installation>' + budgetValues.disc.inst + '</installation>\n';
+		txt += '<service>' + budgetValues.disc.srv + '</service>\n';
+		txt += '</discounts>\n';
+		txt += '<commercialConditions>\n';
+		txt += '<iInstall>' + budgetValues.installments.install + '</iInstall>\n';
+		txt += '<iProducts>' + budgetValues.installments.products + '</iProducts>\n';
+		txt += '</commercialConditions>\n';
+		emailData += '\n';
+                emailData += 'Valor total de Instalação: R$ ' + parseFloat(parseFloat(budgetValues.totals.inst) - (parseFloat(budgetValues.disc.inst) * parseFloat(budgetValues.totals.inst/100))).toFixed(2) + '\n';
+                 emailData += 'Parcelado em: ' + budgetValues.installments.install + 'x\n';
+		if (budgetValues.mode == 0) emailData += 'Valor total dos Equipamentos: R$ ' + parseFloat(parseFloat(budgetValues.totals.item) - (parseFloat(budgetValues.disc.item) * parseFloat(budgetValues.totals.item/100))).toFixed(2) + '\n';
+                 if (budgetValues.mode == 0) emailData += 'Parcelado em: ' + budgetValues.installments.products + 'x\n'; 
+		if (budgetValues.mode == 0) emailData += 'Mensalidade: R$ ' +  parseFloat(parseFloat(budgetValues.totals.srv) - (parseFloat(budgetValues.disc.srv) * parseFloat(budgetValues.totals.srv/100))).toFixed(2); 
+		if (budgetValues.mode != 0) emailData += 'Mensalidade: R$ ' +  parseFloat(parseFloat(parseFloat(budgetValues.totals.item) - (parseFloat(budgetValues.disc.item) * parseFloat(budgetValues.totals.item/100))) + parseFloat(parseFloat(budgetValues.totals.srv) - (parseFloat(budgetValues.disc.srv) * parseFloat(budgetValues.totals.srv/100)))).toFixed(2); 
+		if(isNaN(budgetValues.totalMonthlyPayment)) budgetValues.totalMonthlyPayment = 0;
+		if(!isFinite(budgetValues.totalMonthlyPayment)) budgetValues.totalMonthlyPayment = 0;
+		var vt = '$' + parseFloat(budgetValues.grandTotal).toFixed(2);
+			var mp = '$' + parseFloat(budgetValues.totalMonthlyPayment).toFixed(2);
+		/* write to values */
+		var aid = $app.request().getParameter('aid', 0);
+		var currTab = $app.request().getParameter('tabId', null);
+		$app.request().setParameter('tabId', '6351');
+		$app.http().sync($.Form.generateKey(), 'mobile_activity_details', {
+		items: {
+			'426': txt,
+			'476': JSON.stringify(budgetValues),
+			'477': mp,
+			'478': emailData,
+			'707': mailData2,
+			'479': vt,
+			'aid': aid
+			}
+		});
+		$app.request().setParameter('tabId', currTab);
+		return false;
+	}
+	window['getFieldValue'] = function(fieldId) {
+		var aid = $app.request().getParameter('aid', null);
+		var act = $app.storage().get('Activity')[aid];
+		if (!act) {
+			return null;
+		}
+		var result = act[fieldId];
+		return result;
+	}
+	window['removalItems'] = []; // variable where cascade removals are stored
+	window['applyRemovals'] = function () {
+		for (var i = (budgetValues.products.length-1); i >= 0; i--) {
+			if (budgetValues.products[i].ruleType == 'IT' && budgetValues.products[i].ruleItem != null) {
+				var obj = findBudgetItem(budgetValues.products[i].ruleItem);
+				if (obj == null) obj = findBudgetService(budgetValues.products[i].ruleItem);
+				if (obj == null) { // no more parent
+					rmvTr('tblItems', budgetValues.products[i].id); /* TODO: autoQty < qty? */
+					optionEnable(getElement('itemValues'), budgetValues.products[i].item.itemId, true);
+					handleExclusions(budgetValues.products[i].item, true);
+					budgetValues.products = rmvArrEl(budgetValues.products, i);
+					return true;
+				}
+			}
+		}
+		for (var i = (budgetValues.services.length-1); i >= 0; i--) {
+			if (budgetValues.services[i].ruleType == 'IT' && budgetValues.services[i].ruleItem != null) {
+				var obj = findBudgetItem(budgetValues.services[i].ruleItem);
+				if (obj == null) obj = findBudgetService(budgetValues.services[i].ruleItem);
+				if (obj == null) { // no more parent
+					rmvTr('tblServices', budgetValues.services[i].id); /* TODO: autoQty < qty? */
+					optionEnable(getElement('serviceValues'), budgetValues.services[i].service.serviceId, true);
+					handleExclusions(budgetValues.services[i].service, true);
+					budgetValues.services = rmvArrEl(budgetValues.services, i);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	window['handleOptions'] = function (itemId) {
+		for (var i = 0; i < aggOptions.length; i++) {
+			if (aggOptions[i].product == itemId) {
+				var row = getElement('tblMainOptions').insertRow(budgetValues.lastTblIdx);
+				row.id = 'opts' + aggOptions[i].id;
+				row.className = 'mainOptionsRow';
+				row.insertCell(0).innerHTML = aggOptions[i].text;
+				row.insertCell(1).innerHTML = '<select onchange=\'return updateOptions(&#39;' + aggOptions[i].tag + '&#39;, &#39;' + aggOptions[i].id + '&#39;, &#39;' + itemId + '&#39;, this.value);\' name=\'optsEditor' + aggOptions[i].id + '\' onchange=\'return applyOptions(&#39;optsEditor' + aggOptions[i].id + '&#39;, this.value);\' class=\'form-item\'><option selected=\'selected\' value=\'Y\'>Sim</option><option value=\'N\'>Não</option></select>';
+				row.insertCell(2).innerHTML = '';
+				row.insertCell(3).innerHTML = '';
+				row.insertCell(4).innerHTML = '';
+				budgetValues.optionals.push( {name: aggOptions[i].tag, value: 'Y', rowid: row.id, optional: aggOptions[i]} );
+				budgetValues.lastTblIdx++;
+				applyOptions(itemId, 'optsEditor' + aggOptions[i].id, 'Y');
+			}
+		}
+		return false;
+	}
+	window['applyOptions'] = function (itemId, optionId, value) {
+		for (var i = 0; i < aggOptions.length; i++) {
+			if (itemId == aggOptions[i].product && ('optsEditor' + aggOptions[i].id) == optionId) {
+				colIdx = 5, rowNum = 0;
+				var row = null;
+				for (var j = 0; j < aggOptions[i].rules.length; j++) {
+					if (colIdx >= 5 && (j+1) < aggOptions[i].rules.length) {
+						row = getElement('tblMainOptions').insertRow(budgetValues.lastTblIdx);
+						row.id = 'rule' + aggOptions[i].rules[j].id + '-' + rowNum;
+						row.className = 'mainOptionsRow';
+						colIdx = 0; budgetValues.lastTblIdx++; rowNum++;
+					}
+					if (aggOptions[i].rules[j].answer == value) {
+						if (aggOptions[i].rules[j].editor == 'A') {
+							var num = aggOptions[i].rules[j].text.substring(0, aggOptions[i].rules[j].text.indexOf('-'));
+							var iid = aggOptions[i].rules[j].text.substring(aggOptions[i].rules[j].text.indexOf('-') + 1);
+							var obj = findItem(iid);
+							if (obj == null) obj = findService(iid);
+							if (obj == null) continue;
+							if (obj.type == 'product') addItem(iid, 'Opcionais', 'OP');
+							else addService(iid, 'Opcionais', 'OP');
+							if (num > 1) {
+								obj = ((obj.type == 'product') ? findBudgetItem(iid) : findBudgetService(iid));
+								obj.qty = num;
+								obj.autoQty = num;
+								if (obj.type == 'product') updateItem(obj);
+								else updateService(obj);
+								updateMinMaxOptions(getElement('qty' + obj.id), num, 1000000); // cannot be lower than 'num'
+							}
+						} else {
+							row.insertCell(colIdx++).innerHTML = aggOptions[i].rules[j].text;
+							var txt = '', val = '';
+							if (aggOptions[i].rules[j].editor == 'S') {
+								txt = '<select onchange=\'return updateOptions(&#39;' + aggOptions[i].rules[j].tag + '&#39;, null, null, this.value);\' name=\'' + aggOptions[i].rules[j].tag + '\' class=\'form-item\'>';
+								var options = aggOptions[i].rules[j].values.split(',');
+								for (var k = 0; k < options.length; k++) txt += '<option value=\'' + options[k].trim() + '\'>' + options[k].trim() + '</option>';
+								txt += '</select>';
+								val = options[0];
+							} else {
+								var txt = '<input onchange=\'return updateOptions(&#39;' + aggOptions[i].rules[j].tag + '&#39;, null, null, this.value);\' onkeyup=\'return updateOptions(&#39;' + aggOptions[i].rules[j].tag + '&#39;, null, null, this.value);\' type=\'text\'';
+								if (aggOptions[i].rules[j].editor == 'N') txt += ' onkeypress=\'return event.charCode >= 48 && event.charCode <= 57\'';
+								txt += ' name=\'' + aggOptions[i].rules[j].tag + '\' class=\'form-item\'></input>';
+							}
+							row.insertCell(colIdx++).innerHTML = txt;
+							budgetValues.optionals.push( {name: aggOptions[i].rules[j].tag, value: val, rowid: row.id, optional: aggOptions[i].rules[j]} );
+							if (colIdx < 5) row.insertCell(colIdx++).innerHTML = '';
+						}
+					} else {
+						if (aggOptions[i].rules[j].editor == 'A') { // product/service added to the budget
+							var iid = aggOptions[i].rules[j].text.substring(aggOptions[i].rules[j].text.indexOf('-') + 1);
+							var obj = findBudgetItem(iid);
+							if (obj == null) obj = findBudgetService(iid);
+							if (obj == null) continue;
+							removeItem( ((obj.type == 'service') ? 'tblServices' : 'tblItems' ), iid, true);
+						} else { // optional item added to the structure
+							for (var k = 0; k < budgetValues.optionals.length; k++) {
+								if (budgetValues.optionals[k].name == aggOptions[i].rules[j].tag) {
+									budgetValues.optionals = rmvArrEl(budgetValues.optionals, k); // remove from optionals
+									break;
+								}
+							}
+							rn = 0;
+							while (true) { // remove TRs for the rule
+								var tr = getElement('rule' + aggOptions[i].rules[j].id + '-' + rn);
+								if (tr == null) break;
+								rmvTr('tblMainOptions', 'rule' + aggOptions[i].rules[j].id + '-' + rn++);
+								budgetValues.lastTblIdx--;
+							}
+						}
+					}
+				}
+			}
+		}
+		return applyRules();
+	}	
+	window['getMoveOptions'] = function () {
+		var txtOptions = '<option value=\'1\'>1-INCLUIR</option><option value=\'2\'>2-REMANEJAR</option>';
+		txtOptions += '<option value=\'3\'>3-REINSTALAR</option><option value=\'4\'>4-EXCLUIR</option>';
+		txtOptions += '<option value=\'5\'>5-EQUIP.EXISTENTES</option><option value=\'6\'>6-EXCLUSIVO INSTALAÇÕES</option>';
+		txtOptions += '<option value=\'7\'>7-REPOSIÇÃO</option>';
+		return txtOptions;
+	}
+	window['getQuantityOptions'] = function (minOptions, maxOptions, withMax) {
+		var txtOptions = '';
+		for (var i = minOptions; i < (maxOptions+1); i++) txtOptions += '<option value=\'' + i + '\'>' + i + '</option>';
+		if (withMax) txtOptions += '<option value=\'+' + maxOptions + '\'>+ ' + maxOptions + '</option>'
+		return txtOptions;
+	}
+	window['handleAlarmType'] = function (recalc) {
+		if (getElement('projType').value == 0 && getElement('alarmType') == null) {
+			getElement('lblAlarmType').style.display = 'block';
+			getElement('divAlarmTypes').innerHTML = '<select onchange=\'return handleAlarmType(true);\' id=\'alarmType\' class=\'form-item\'></select>';
+			var opts = getElement('alarmType');
+			for (var i = 0; i < alarmTypes.length; i++) { opts.add(createOption(alarmTypes[i].id, alarmTypes[i].name)); }
+		} else if (getElement('projType').value != 0 && getElement('alarmType') != null) {
+			var alarmType = getAlarmType(budgetValues.alarmType);
+			for (var i = 0; i < alarmType.rules.length; i++) {
+				var obj = findProductOrService(alarmType.rules[i].substring(alarmType.rules[i].indexOf('-') + 1));
+				if (obj == null) continue;
+				optionEnable(getElement(((obj.type == 'service') ? 'serviceValues' : 'itemValues')), alarmType.rules[i].substring(alarmType.rules[i].indexOf('-') + 1), true);
+			}
+			handleExclusions(alarmType, true);
+			budgetValues.alarmType = -1;
+			getElement('lblAlarmType').style.display = 'none';
+			getElement('divAlarmTypes').innerHTML = '';
+		}
+		if (budgetValues.alarmType != -1 && recalc) { // remove items from previously selected alarm
+			var alarmType = getAlarmType(budgetValues.alarmType);
+			if (alarmType != null) {
+				for (var i = 0; i < alarmType.rules.length; i++) {
+					var obj = findBudgetItem(alarmType.rules[i].substring(alarmType.rules[i].indexOf('-') + 1));
+					if (obj == null) obj = findBudgetService(alarmType.rules[i].substring(alarmType.rules[i].indexOf('-') + 1));
+					if (obj == null) continue;
+					removeItem( ((obj.type == 'service') ? 'tblServices' : 'tblItems' ), alarmType.rules[i].substring(alarmType.rules[i].indexOf('-') + 1), true);
+					optionEnable(getElement(((obj.type == 'service') ? 'serviceValues' : 'itemValues')), alarmType.rules[i].substring(alarmType.rules[i].indexOf('-') + 1), true);
+				}
+				handleExclusions(alarmType, true);
+			}
+		}
+
+		if (getElement('projType').value != 0) return false;
+		var alarmType = getAlarmType(getElement('alarmType').value);
+		if (!recalc) { // used on load from existing budget: return because items/services already added
+			handleExclusions(alarmType, false); 
+			return false; 
+		}
+		if (alarmType == null) return false;
+		budgetValues.alarmType = alarmType.id;
+		for (var i = 0; i < alarmType.rules.length; i++) {
+			var num = alarmType.rules[i].substring(0, alarmType.rules[i].indexOf('-'));
+			var iid = alarmType.rules[i].substring(alarmType.rules[i].indexOf('-') + 1);
+			var obj = findItem(iid);
+			if (obj == null) obj = findService(iid);
+			if (obj == null) continue;
+			if (obj.type == 'product') addItem(iid, 'Tipo de Alarme: ' + alarmType.name, 'AT');
+			else addService(iid, 'Tipo de Alarme: ' + alarmType.name, 'AT');
+			if (num > 1) {
+				obj = ((obj.type == 'product') ? findBudgetItem(iid) : findBudgetService(iid));
+				obj.qty = num;
+				obj.autoQty = num;
+				if (obj.type == 'product') updateItem(obj);
+				else updateService(obj);
+				updateMinMaxOptions(getElement('qty' + obj.id), num, 1000000); // cannot be lower than 'num'
+			}
+		}
+
+		handleExclusions(alarmType, false); // apply exclusions
+
+		if (recalc) return recalculateTotals();
+		else return false;		
+	}
+	window['addItem'] = function (iId, ruleItem, ruleType) {
+		console.log('addItem(' + iId + ', ' + ruleItem + ', ' + ruleType + ')');
+		var item = findItem(iId);
+		if (item == null) return false; // item not found
+		var el = { item: item, id: (new Date()).getTime(), mov: 1, qty: 1, 
+			autoQty: ((ruleItem != null) ? 1 : 0), ruleItem: ruleItem, type: item.type,
+			ruleType: ruleType, tPrice: parseFloat(item.unitPrice(budgetValues.mode) + item.installPrice) };
+
+		// insert the table row
+		var row = getElement('tblItems').insertRow(-1);
+		row.id = el.id;
+		var cellIdx = 0;
+		row.insertCell(cellIdx++).innerHTML = el.item.itemId;
+		row.insertCell(cellIdx++).innerHTML = (el.item.name.indexOf('-') != -1) ? el.item.name.substring(el.item.name.indexOf('-')+1) : el.item.name;
+		row.insertCell(cellIdx++).innerHTML = '<select class=\'form-item\' style=\'min-width: 40px;\' id=\'mov' + el.id + '\' onchange=\'return updateMoveOption(this.value, &#39;' + el.item.itemId + '&#39;);\'>' + getMoveOptions() + '</select>';
+			row.insertCell(cellIdx++).innerHTML = '<select class=\'form-item\' style=\'min-width: 40px; max-width: 60px;\' id=\'qty' + el.id + '\' onchange=\'updateQty(&#39;tblItems&#39;, &#39;' + el.item.itemId + '&#39;, this.value); return false;\'>' + getQuantityOptions(1, 200, true) + '</select>';
+			getElement('qty' + el.id).value = el.qty;
+		createCell(row, cellIdx++, 'up' + el.id, '$' + item.unitPrice(budgetValues.mode).toFixed(2));
+		row.insertCell(cellIdx++).innerHTML = '$' + item.installPrice.toFixed(2);
+		createCell(row, cellIdx++, 'tp' + el.id, '$' + el.tPrice.toFixed(2));
+
+		budgetValues.products.push(el);
+		optionEnable(getElement('itemValues'), iId, false);
+	
+		// handle optionals
+		handleOptions(iId);
+	
+		if (ruleItem == null) {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' onclick=\'removeItem(&#39;tblItems&#39;, &#39;' + el.item.itemId + '&#39;, true);\'>Remover</a>';
+			handleExclusions(item, false);
+			return applyRules();
+		} else {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' style=\'color: #ccc\' title=\'Este item não pode ser removido porque faz parte de ' + ruleItem + '.\'>Remover</a>';
+			handleExclusions(item, false);
+			// return false;
+			return applyRules();
+		}
+	}
+	window['addService'] = function (sId, ruleItem, ruleType) {
+		var service = findService(sId);
+		if (service == null) return false; // service not found
+		var el = { service: service, id: (new Date()).getTime(), qty: 1,
+			autoQty: ((ruleItem != null) ? 1 : 0), ruleItem: ruleItem, type: service.type,
+			ruleType: ruleType, tPrice: parseFloat(service.price) };
+
+		// insert the table row
+		var row = getElement('tblServices').insertRow(-1);
+		row.id = el.id;
+		var cellIdx = 0;
+		row.insertCell(cellIdx++).innerHTML = el.service.serviceId;
+		row.insertCell(cellIdx++).innerHTML = (el.service.name.indexOf('-') != -1) ? el.service.name.substring(el.service.name.indexOf('-')+1) : el.service.name;
+		row.insertCell(cellIdx++).innerHTML =  '<select class=\'form-item\' style=\'min-width: 40px; max-width: 60px;\' id=\'qty' + el.id + '\' onchange=\'updateQty(&#39;tblServices&#39;, &#39;' + el.service.serviceId + '&#39;, this.value); return false;\'>' + getQuantityOptions(1, 200, true) + '</select>';
+getElement('qty' + el.id).value = el.qty;
+		createCell(row, cellIdx++, 'up' + el.id, '$' + el.service.price.toFixed(2));
+		createCell(row, cellIdx++, 'tp' + el.id, '$' + el.tPrice);
+
+		budgetValues.services.push(el);
+		optionEnable(getElement('serviceValues'), sId, false);
+		if (ruleItem == null) {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' onclick=\'removeItem(&#39;tblServices&#39;, &#39;' + el.service.serviceId + '&#39;, true);\'>Remover</a>';
+			handleExclusions(service, false);
+			return applyRules();
+		} else {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' style=\'color: #ccc\' title=\'Este item não pode ser removido porque faz parte de ' + ruleItem + '.\'>Remover</a>';
+			handleExclusions(service, false);
+			return applyRules();
+			// return false;
+		}
+	}	
+	window['updateMinMaxOptions'] = function (opts, min, max) {
+		console.log('updateMinMaxOptions(opts, ' + min + ', ' + max + ')');
+		var maxValue = 0, minValue = 1000000; // TODO: 1.000.000 is never to loop. Test.
+		for (var i = (opts.options.length-1); i >= 0; i--) {
+			if (!isNaN(opts.options[i].value) && 
+				(parseInt(opts.options[i].value) < min || parseInt(opts.options[i].value) > max)) {
+				opts.remove(i);
+				continue;
+			}
+			if (!isNaN(opts.options[i].value) && maxValue < parseInt(opts.options[i].value)) maxValue = parseInt(opts.options[i].value);
+			if (!isNaN(opts.options[i].value) && minValue > parseInt(opts.options[i].value)) minValue = parseInt(opts.options[i].value);
+		}
+		if (minValue == 1000000) minValue = 1;
+		if (max < 1000000) {
+			for (var i = (opts.options.length-1); i >= 0; i--) { if (opts.options[i].value.indexOf('+') == 0) opts.remove(i); }
+		}
+		if (max != 1000000 && max > maxValue) {
+			for (var i = (maxValue + 1); i < (max + 1); i++) opts.add(createOption(i, i));
+		}
+		if (min < minValue) {
+			var idx = 0;
+			for (var i = min; i < minValue; i++) opts.add(createOption(i, i), idx++);
+		}
+		return false;
+	}		
+	window['addOptions'] = function (opts) {
+		var currentMax = 0, addVals = parseInt(opts.value.substring(1));
+		opts.remove(opts.selectedIndex);
+		for (var i = 0; i < opts.options.length; i++) {
+			if (!isNaN(opts.options[i].value) && parseInt(opts.options[i].value) > currentMax) currentMax = parseInt(opts.options[i].value);
+		}
+		for (var i = 0; i < addVals; i++) { opts.add(createOption((++currentMax), currentMax)); }
+		opts.add(createOption('+' + addVals, '+ ' + addVals));
+		return false;
+	}	
+	window['handleProjectType'] = function (projectType, recalc) {
+		budgetValues.pType = parseInt(projectType);
+		if (recalc) {
+			clearTable('tblItems');
+			clearTable('tblServices');
+			// remove optionals if any on screen
+			for (var i = 0; i < budgetValues.products.length; i++) { removeAllOptions(budgetValues.products[i].item.itemId); }
+			for (var i = 0; i < budgetValues.services.length; i++) { removeAllOptions(budgetValues.services[i].service.serviceId); }
+			// clear the values in the budget
+			budgetValues.products = [];
+			budgetValues.services = [];
+			budgetValues.optionals = [];
+		}	
+		// re-build options for the new project
+		var opts = getElement('itemValues');
+		removeOptions(opts); // remove all
+		var pt = getProjectType(budgetValues.pType);
+		var groups = pt.allowedGroups;
+		for (var i = 0; i < items.length; i++) {
+			for (var j = 0; j < groups.length; j++) {
+				if (items[i].code == groups[j]) { // group is allowed?
+					var gr = document.createElement('OPTGROUP');
+					gr.label = items[i].group;
+					for (var k = 0; k < items[i].products.length; k++) {
+						if (!arrayContains(pt.excludeItems, items[i].products[k].itemId)) {
+							var opt = document.createElement('OPTION');
+							opt.innerHTML = items[i].products[k].name;
+							opt.value = items[i].products[k].itemId;
+							gr.appendChild(opt);
+						}
+					}
+					opts.appendChild(gr);
+					break;
+				}
+			}
+		}
+		var optsProj = getElement('projType');
+		getElement('projectDesc').innerHTML = 'Projeto ' + optsProj.options[optsProj.selectedIndex].text;
+	
+		// project type rules
+		for (var i = 0; i < pt.rules.length && recalc; i++) {
+			console.log('project rule: ' + pt.rules[i]);
+			var obj = findItem(pt.rules[i]);
+			if (obj == null) obj = findService(pt.rules[i]);
+			if (obj == null) continue;
+			if (obj.type == 'product') addItem(pt.rules[i], 'Tipo de Projeto: ' + pt.name, 'PT');
+			else addService(pt.rules[i], 'Tipo de Projeto: ' + pt.name, 'PT');
+		}
+
+		if (budgetValues.pType == 2) budgetValues.mode = 0;
+		optionEnable(getElement('pType'), '1', (budgetValues.pType != 2));
+		
+		handleAlarmType(recalc); // handles the alarm type
+
+		if (recalc) return recalculateTotals();
+		else return false;
+	}	
+}
+
+// populate options
+var opts = getElement('serviceValues'); removeOptions(opts);
+for (var i = 0; i < services.length; i++) { opts.add(createOption(services[i].serviceId, services[i].name)); }
+opts = getElement('paymentInstallParcels'); removeOptions(opts);
+for (var i = 0; i < 12; i++) { opts.add(createOption((i+1), (i+1))); }
+opts = getElement('paymentItemParcels'); removeOptions(opts);
+for (var i = 0; i < 12; i++) { opts.add(createOption((i+1), (i+1))); }
+opts = getElement('itemDiscount'); removeOptions(opts);
+for (var i = 0; i < 26; i++) { opts.add(createOption(i, i + '%')); }
+opts = getElement('installDiscount'); removeOptions(opts);
+for (var i = 0; i < 101; i++) { opts.add(createOption(i, i + '%')); }
+opts = getElement('serviceDiscount'); removeOptions(opts);
+for (var i = 0; i < 26; i++) { opts.add(createOption(i, i + '%')); }
+opts = getElement('projType'); removeOptions(opts);
+for (var i = 0; i < projectTypes.length; i++) { opts.add(createOption(projectTypes[i].id, projectTypes[i].name)); }
+
+getElement('pType').selectedIndex = 0;
+getElement('projType').selectedIndex = 0;
+getElement('itemDiscount').selectedIndex = 0;
+getElement('installDiscount').selectedIndex = 0;
+getElement('serviceDiscount').selectedIndex = 0;
+getElement('paymentItemParcels').selectedIndex = 0;
+getElement('paymentInstallParcels').selectedIndex = 0;
+getElement('divOverview').style.display = 'none';
+getElement('divItems').style.display = 'none';
+getElement('divServices').style.display = 'none';
+clearTable('tblItems');
+clearTable('tblServices');
+
+// begin reload from budget in progress logic
+var existingOffer = getFieldValue(proposalData);
+window['budgetValues'] = null;
+if (existingOffer != null && existingOffer != '' && existingOffer.trim() != '') {
+	budgetValues = JSON.parse(existingOffer);
+	for (var i = 0; i < budgetValues.products.length; i++) budgetValues.products[i].item.unitPrice = function (mode) { return (mode == 0) ? parseFloat(this.salePrice) : parseFloat(this.rentalPrice); };
+	getElement('pType').selectedIndex = budgetValues.mode;
+	getElement('projType').value = budgetValues.pType;
+	var mode = budgetValues.mode;
+	for (var i = 0; i < budgetValues.products.length; i++) {
+		var el = budgetValues.products[i];
+		var cellIdx = 0;
+		var row = getElement('tblItems').insertRow(-1);
+		row.id = el.id;
+		row.insertCell(cellIdx++).innerHTML = el.item.itemId;
+		row.insertCell(cellIdx++).innerHTML = (el.item.name.indexOf('-') != -1) ? el.item.name.substring(el.item.name.indexOf('-')+1) : el.item.name;
+		row.insertCell(cellIdx++).innerHTML = '<select class=\'form-item\' style=\'min-width: 40px;\' id=\'mov' + el.id + '\' onchange=\'return updateMoveOption(this.value, &#39;' + el.item.itemId + '&#39;);\'>' + getMoveOptions() + '</select>';
+			row.insertCell(cellIdx++).innerHTML = '<select class=\'form-item\' style=\'min-width: 40px; max-width: 60px;\' id=\'qty' + el.id + '\' onchange=\'updateQty(&#39;tblItems&#39;, &#39;' + el.item.itemId + '&#39;, this.value); return false;\'>' + getQuantityOptions(1, 200, true) + '</select>';
+			getElement('qty' + el.id).value = el.qty;
+		getElement('mov' + el.id).value = el.mov;
+		createCell(row, cellIdx++, 'up' + el.id, '$' + el.item.unitPrice(budgetValues.mode).toFixed(2));
+		row.insertCell(cellIdx++).innerHTML = '$' + el.item.installPrice.toFixed(2);
+		createCell(row, cellIdx++, 'tp' + el.id, '$' + el.tPrice);
+		if (el.ruleItem == null) {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' onclick=\'removeItem(&#39;tblItems&#39;, &#39;' + el.item.itemId + '&#39;, true);\'>Remover</a>';
+		} else {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' style=\'color: #ccc\' title=\'Este item não pode ser removido porque faz parte de ' + el.ruleItem + '.\'>Remover</a>';
+		}
+		optionEnable(getElement('itemValues'), el.item.itemId, false);
+		handleExclusions(el.item, false);
+	}
+	for (var i = 0; i < budgetValues.services.length; i++) {
+		var el = budgetValues.services[i];
+		var cellIdx = 0;
+		var row = getElement('tblServices').insertRow(-1);
+		row.id = el.id;
+		row.insertCell(cellIdx++).innerHTML = el.service.serviceId;
+		row.insertCell(cellIdx++).innerHTML = (el.service.name.indexOf('-') != -1) ? el.service.name.substring(el.service.name.indexOf('-')+1) : el.service.name;
+		row.insertCell(cellIdx++).innerHTML =  '<select class=\'form-item\' style=\'min-width: 40px; max-width: 60px;\' id=\'qty' + el.id + '\' onchange=\'updateQty(&#39;tblServices&#39;, &#39;' + el.service.serviceId + '&#39;, this.value); return false;\'>' + getQuantityOptions(1, 200, true) + '</select>';
+		getElement('qty' + el.id).value = el.qty;
+
+		createCell(row, cellIdx++, 'up' + el.id, '$' + el.service.price.toFixed(2));
+		createCell(row, cellIdx++, 'tp' + el.id, '$' + el.tPrice);
+		if (el.ruleItem == null) {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' onclick=\'removeItem(&#39;tblServices&#39;, &#39;' + el.service.serviceId + '&#39;, true);\'>Remover</a>';
+		} else {
+			row.insertCell(cellIdx++).innerHTML = '<a href=\'javascript:void(0);\' style=\'color: #ccc\' title=\'Este item não pode ser removido porque faz parte de ' + el.ruleItem + '.\'>Remover</a>';
+		}
+		optionEnable(getElement('serviceValues'), el.service.serviceId, false);
+		handleExclusions(el.service, false);
+	}
+	
+	getElement('itemDiscount').selectedIndex = budgetValues.disc.item;
+	getElement('installDiscount').selectedIndex = budgetValues.disc.inst;
+	getElement('serviceDiscount').selectedIndex = budgetValues.disc.srv;
+	if (budgetValues.mode == 0) getElement('paymentItemParcels').selectedIndex = (budgetValues.installments.products - 1);
+	getElement('paymentInstallParcels').selectedIndex = (budgetValues.installments.install - 1);
+	getElement('installTime').value = budgetValues.cs;
+	getElement('bigJob').value = budgetValues.bj;
+	getElement('underWork').value = budgetValues.uw;
+	
+	handleProjectType(budgetValues.pType, false);
+	window['lastTblColIdx'] = 0;
+	
+	// reload optionals
+	var col = true, lastRow = null;
+	for (var i = 0; i < budgetValues.optionals.length; i++) {
+		if (budgetValues.optionals[i].rowid.indexOf('opts') == 0) { // this is an option
+			var row = getElement('tblMainOptions').insertRow(-1);
+			row.id = budgetValues.optionals[i].rowid;
+			row.className = 'trH25';
+			row.insertCell(0).innerHTML = budgetValues.optionals[i].optional.text;
+			row.insertCell(1).innerHTML = '<select onchange=\'return updateOptions(&#39;' + budgetValues.optionals[i].name + '&#39;, &#39;' + budgetValues.optionals[i].optional.id + '&#39;, &#39;' + budgetValues.optionals[i].optional.itemId + '&#39;, this.value);\' name=\'optsEditor' + budgetValues.optionals[i].optional.id + '\' id=\'optsEditor' + budgetValues.optionals[i].optional.id + '\' onchange=\'return applyOptions(&#39;optsEditor' + budgetValues.optionals[i].optional.id + '&#39;, this.value);\'><option value=\'Y\'>Sim</option><option value=\'N\'>Não</option></select>';
+			getElement('optsEditor' + budgetValues.optionals[i].optional.id).value = budgetValues.optionals[i].value;
+			row.insertCell(2).innerHTML = '';
+			row.insertCell(3).innerHTML = '';
+			row.insertCell(4).innerHTML = '';
+		} else { // this is a rule
+			if (budgetValues.optionals[i].optional.editor == 'A') {
+				// TODO: updateMinMaxOptions(getElement('qty' + obj.id), num, 1000000); // cannot be lower than 'num'
+				continue; // this rule value is in items/services
+			}
+			if (lastRow == null || lastRow != budgetValues.optionals[i].rowid) {
+				row = getElement('tblMainOptions').insertRow(-1);
+				row.id = budgetValues.optionals[i].rowid;
+				row.className = 'trH25';
+				col = 0;
+			}
+			row.insertCell(col++).innerHTML = budgetValues.optionals[i].optional.text;
+			var txt = '', val = budgetValues.optionals[i].value;
+			if (budgetValues.optionals[i].optional.editor == 'S') {
+				txt = '<select onchange=\'return updateOptions(&#39;' + budgetValues.optionals[i].optional.tag + '&#39;, null, null, this.value);\' name=\'' + budgetValues.optionals[i].optional.tag + '\' id=\'' + budgetValues.optionals[i].optional.tag + '\' class=\'form-item\'>';
+				var options = budgetValues.optionals[i].optional.values.split(',');
+				for (var k = 0; k < options.length; k++) txt += '<option value=\'' + options[k].trim() + '\'>' + options[k].trim() + '</option>';
+				txt += '</select>';
+				row.insertCell(col++).innerHTML = txt;
+				getElement(budgetValues.optionals[i].optional.tag).value = budgetValues.optionals[i].value;
+			} else {
+				var txt = '<input onchange=\'return updateOptions(&#39;' + budgetValues.optionals[i].optional.tag + '&#39;, null, null, this.value);\' onkeyup=\'return updateOptions(&#39;' + budgetValues.optionals[i].optional.tag + '&#39;, null, null, this.value);\' type=\'text\'';
+				if (budgetValues.optionals[i].optional.editor == 'N') txt += ' onkeypress=\'return event.charCode >= 48 && event.charCode <= 57\'';
+				txt += ' name=\'' + budgetValues.optionals[i].optional.tag + '\' class=\'form-item\'';
+				txt += ' value=\'' + val + '\'>';
+				txt += '</input>';
+				row.insertCell(col++).innerHTML = txt;
+			}
+			if (col < 5) row.insertCell(col++).innerHTML = '';
+			lastRow = budgetValues.optionals[i].rowid;
+		}
+	}
+	
+} else {
+	/* TODO: remove .pp */
+	budgetValues = { mode: 0, pType: 0, 
+		products: [], services: [], optionals: [],
+		disc: {item: 0, srv: 0, inst: 0}, 
+		totals: {item: 0, srv: 0, inst: 0},
+		installments: {install: 1, products: 1}, 
+		grandTotal: 0, totalMonthlyPayment: 0, 
+		pp: 1, bj: 1, cs: 1, alarmType: -1, lastTblIdx: 3, uw: 3
+	};
+	window['lastTblColIdx'] = 0;
+	handleProjectType(0, true); // default
+}
+
+applyRules();
+getElement('proposalDiv').style.display='block';
+getElement('createProposalBut').style.display='none';
+return false;
+
+]]></xsl:attribute>Elaborar / Alterar Proposta</button>
+
+<!-- main div with the proposal items -->
+<div id="proposalDiv" style="width: 100%; display: none;">
+    <div style="width: 100%; height: 20px;"></div>
+    <div style="width: 100%; height: 14px;"></div>
+    <div class="group_box">
+        <div class="group_box_title" id="titleOverview">
+            <a onclick="openCloseGroup('divOverview', 'titleOverview');" href="javascript:void(0);" style="text-decoration: none; font-weight: bold; color: #000000;" class="">
+                <div style="padding: 10px; text-decoration: none; width: 98%; text-align: right;"><span id="projectDesc">Projeto Alarme</span></div>
+            </a>
+        </div>
+        <div style="padding-left: 5px; width: 100%; display: none;" id="divOverview">
+            <div style="width: 100%; height: 20px;"></div>
+            <table style="border: 0px;" id="tblMainOptions">
+                <tbody>
+                    <tr class="mainOptionsRow">
+                        <td>Modalidade: </td>
+                        <td>
+                            <select onchange="return handleMode(this.value);" id="pType" class="form-item">
+                                <option value="0">Venda</option>
+                                <option value="1">Comodato</option>
+                            </select>
+                        </td>
+                        <td style="padding-left: 5px; padding-right: 5px;"> </td>
+                        <td>Instalação em Horário Comercial: </td>
+                        <td>
+                            <select onchange="handleInstallTime(this.value);" id="installTime" class="form-item" style="min-width: 40px; max-width: 200px;">
+                                <option value="1">Sim</option>
+                                <option value="2">Não</option>
+                            </select>
+                        </td>                        
+                    </tr>
+                    <tr class="mainOptionsRow">
+                        <td>Tipo de Projeto: </td>
+                        <td><select onchange="return handleProjectType(this.value, true);" id="projType" class="form-item"></select></td>
+                        <td style="padding-left: 5px; padding-right: 5px;"> </td>
+                        <td>Grande Obra: </td>
+                        <td>
+                            <select onchange="handleBigJob(this.value);" id="bigJob" class="form-item" style="min-width: 40px; max-width: 200px;">
+                                <option value="1">Não</option>
+                                <option value="2">Sim, inferior a 2000m</option>
+                                <option value="3">Sim, superior a 2000m</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="mainOptionsRow">
+                        <td><span id="lblAlarmType" style="display: none;">Tipo de Alarme</span></td>
+                        <td><div id="divAlarmTypes"></div></td> <!-- placeholder for alarm types -->
+                        <td style="padding-left: 5px; padding-right: 5px;"> </td>
+                        <td>Local está em Obras: </td>
+                        <td>
+                            <select onchange="handleUnderWork(this.value);" id="underWork" class="form-item" style="min-width: 40px; max-width: 200px;">
+                                <option value="1">Não</option>
+                                <option value="2">Parcialmente, os locais das instalações não estão em obras.</option>
+                                <option value="3">Sim, passarão somente cabos, sem liberação de equipamentos.</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="width: 100%; height: 20px;"></div>
+        </div>
+    </div>
+    <div style="width: 100%; height: 14px;"></div>
+    <div class="group_box">
+        <div class="group_box_title" id="titleItems">
+            <a onclick="openCloseGroup('divItems', 'titleItems');" href="javascript:void(0);" style="text-decoration: none; font-weight: bold; color: #000000;" class="">
+                <div style="padding: 10px; text-decoration: none; width: 98%; text-align: right;">Equipamentos - $<span id="totalItems">0.00</span></div>
+            </a>
+        </div>
+        <div style="padding-left: 5px; width: 100%; display: none;" id="divItems">
+            <div style="width: 100%; height: 20px;"></div>
+            <div style="height: 35px; display: inline;"><span style="width: 200px; padding-right: 5px;">Seleccionar Equipamentos: </span>
+                <select onchange="document.getElementById('addItemBut').disabled = (this.value.disabled); return false;" id="itemValues" style="min-width: 100px; max-width: 250px;" class="form-item"></select>
+                <div style="display: inline; padding-left: 10px;">
+                    <button onclick="return addItem(document.getElementById('itemValues').value, null, 'IT');" style="height: 29px; display: inline;" class="button dismiss" id="addItemBut">Adicionar</button>
+                </div>
+            </div>
+            <div style="width: 100%; height: 10px;"></div>
+            <table class="item_table" id="tblItems">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;">ID</th>
+                        <th>Equipamento</th>
+                        <th style="width: 70px;">Movimentação</th>
+                        <th style="width: 70px;">Quantidade</th>
+                        <th style="width: 70px;">Preço</th>
+                        <th style="width: 70px;">Instalação</th>
+                        <th style="width: 70px;">Total</th>
+                        <th style="width: 70px;"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div style="width: 100%; height: 20px;"></div>
+        </div>
+    </div>
+    <div style="width: 100%; height: 14px;"></div>
+    <div class="group_box">
+        <div class="group_box_title" id="titleServices">
+            <a onclick="openCloseGroup('divServices', 'titleServices');" href="javascript:void(0);" style="text-decoration: none; font-weight: bold; color: #000000;" class="">
+                <div style="padding: 10px; text-decoration: none; width: 98%; text-align: right;">Serviços - $<span id="totalServices">0.00</span></div>
+            </a>
+        </div>
+        <div style="padding-left: 5px; width: 100%; display: none;" id="divServices">
+            <div style="width: 100%; height: 20px;"></div>
+            <div style="height: 35px; display: inline; width: 100%;"><span style="width: 200px; padding-right: 5px;">Seleccionar Serviços: </span>
+                <select id="serviceValues" style="min-width: 100px; max-width: 250px;" class="form-item"></select>
+                <div style="display: inline; padding-left: 10px;">
+                    <button onclick="return addService(document.getElementById('serviceValues').value, null, 'IT');" style="height: 29px; display: inline;" class="button dismiss">Adicionar</button>
+                </div>   </div> <div style="width: 100%; height: 10px;"></div>    <table class="item_table" id="tblServices">
+                <thead>  <tr>   <th style="width: 40px;">ID</th>
+                        <th>Serviço</th>  <th style="width: 70px;">Quantidade</th>
+                        <th style="width: 70px;">Preço</th>
+                        <th style="width: 70px;">Total</th>
+                        <th style="width: 70px; "></th>
+                    </tr>     </thead>  <tbody></tbody>   </table>
+            <div style="width: 100%; height: 20px;"></div>  </div>  </div>
+    <div style="width: 100%; height: 14px;"></div>
+    <div class="group_box">    <div class="group_box_title" id="titleGrandTotal">
+            <a onclick="openCloseGroup('divGrandTotal', 'titleGrandTotal');" href="javascript:void(0);" style="text-decoration: none; font-weight: bold; color: #000000;" class="">
+                <div style="padding: 10px; text-decoration: none; width: 98%; text-align: right;">Total - $<span id="grandTotal">0.00</span></div>    </a>    </div>     <div style="padding-left: 5px; width: 100%; display: none;" id="divGrandTotal">    <div style="width: 100%; height: 10px;"></div>   <table id="totalsTable" style="border: 0;">
+                <tbody>   <tr class="trH35"><td class="subHeading" colspan="3"><strong>Descontos</strong></td></tr>
+                    <tr class="trH25">   <td>Equipamentos: </td>
+                        <td><select onchange="handleDiscounts(this.form.itemDiscount, this.form.installDiscount, this.form.serviceDiscount); return false;" id="itemDiscount" style="min-width: 40px; max-width: 80px;" class="form-item"></select></td>
+                        <td style="padding-left: 10px;">$<span id="totalItemDiscount">0.00 ($0.00)</span></td>
+                    </tr>   <tr class="trH25">    <td>Instalação:</td>
+                        <td><select onchange="handleDiscounts(this.form.itemDiscount, this.form.installDiscount, this.form.serviceDiscount); return false;" id="installDiscount" style="min-width: 40px; max-width: 80px;" class="form-item"></select></td>
+                        <td style="padding-left: 10px;">$<span id="totalInstallDiscount">0.00 ($0.00)</span></td>
+                    </tr>  <tr class="trH25">  <td>Serviços:</td>
+                        <td><select  onchange="handleDiscounts(this.form.itemDiscount, this.form.installDiscount, this.form.serviceDiscount); return false;" id="serviceDiscount" style="min-width: 40px; max-width: 80px;" class="form-item"></select></td>
+                        <td style="padding-left: 10px;">$<span id="totalServiceDiscount">0.00 ($0.00)</span></td>
+                    </tr>    <tr class="trH25">   <td>Total Descontos:</td>
+                        <td><span></span></td>  <td style="padding-left: 10px;">$<span id="totalDiscount">0.00</span></td>
+                    </tr>   <tr class="trH35"><td class="subHeading" colspan="3"><strong>Parcelamento</strong></td></tr>
+                    <tr id="equipmentInstallmentTR" class="trH25">
+                        <td>Equipamentos: </td>     <td><select onchange="handleInstallments();" id="paymentItemParcels" style="min-width: 40px; max-width: 80px;" class="form-item"></select></td>   <td style="padding-left: 10px;"><span id="totalParcelItemValue">$0.00 ($0.00)</span></td>
+                    </tr>  <tr class="trH25">     <td>Instalação: </td>
+                        <td><select onchange="handleInstallments();" id="paymentInstallParcels" style="min-width: 40px; max-width: 80px;" class="form-item"></select></td>
+                        <td style="padding-left: 10px;"><span id="totalParcelInstallValue">$0.00 ($0.00)</span></td>
+                    </tr>   <tr class="trH25">   <td>Valor da Primeira Parcela: </td>  <td><span></span></td>  <td style="padding-left: 10px;">$<span id="totalMonthlyPayment"></span></td>
+                    </tr>   <tr class="trH35"><td class="subHeading" colspan="3"><strong>Totais</strong></td></tr>
+                    <tr class="trH25">   <td><div style="display: inline;">Instalação: </div></td>    <td><span></span></td>
+                        <td style="padding-left: 10px;">$<span id="totalInstall">0.00</span><span id="installMarker"></span></td>
+                    </tr>   <tr class="trH25">   <td><div style="display: inline;"><span id="modality">Venda</span>: </div></td>
+                        <td><span></span></td>   <td style="padding-left: 10px;">$<span id="totalSale">0.00</span></td>  </tr>  <tr class="trH25">  <td><div style="display: inline;">Serviços: </div></td>     <td><span></span></td>  <td style="padding-left: 10px;">$<span id="totalService">0.00</span></td>  </tr>   <tr class="trH25">    <td style="width: 270px;"><div style="display: inline;">Mensalidade <span id="monthlyDesc">(Serviços)</span>: </div></td>   <td><span></span></td> <td style="padding-left: 10px;">$<span id="totalMonthly">0.00</span></td>  </tr>  <tr style="padding: 5px 0 5px 0; height: 30px; vertical-align: bottom;"><td style="font-size: 10px; vertical-align: bottom;" colspan="3"><span id="totalsNotes"></span></td></tr>
+                </tbody>  </table>  <div style="width: 100%; height: 10px;"></div>   </div> </div> </div> </div> </xsl:template> </xsl:stylesheet>
